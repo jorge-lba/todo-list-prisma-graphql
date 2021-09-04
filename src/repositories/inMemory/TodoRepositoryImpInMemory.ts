@@ -44,7 +44,7 @@ class TodoRepositoryImpInMemory implements TodoRepository {
     return todo;
   }
 
-  async readyById(id: number): Promise<TodoDTO | undefined> {
+  async toggleDoneById(id: number): Promise<TodoDTO | undefined> {
     const index = this.todos.findIndex(todo => todo.id === id);
 
     if(index === -1){
@@ -53,7 +53,7 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
     const todo = this.todos[index];
 
-    todo.done = true;
+    todo.done = !todo.done;
 
     return todo;
   }
