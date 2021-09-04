@@ -1,0 +1,7 @@
+{
+  "name": "prisma-graphql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jorge Alegretti <jorgeluiz.b.alegretti@gmail.com>",
+  "license": "MIT"
+}
