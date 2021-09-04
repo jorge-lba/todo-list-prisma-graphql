@@ -2,17 +2,9 @@ import { TodoDTO, TodoRepository, TodoCreateDTO } from "../TodoRepository";
 
 class TodoRepositoryImpInMemory implements TodoRepository {
   todos: Array<TodoDTO>
-  private static instance: TodoRepositoryImpInMemory
-
-  private constructor() {
+  
+  constructor() {
     this.todos = new Array<TodoDTO>();
-  }
-
-  static getInstance(): TodoRepositoryImpInMemory {
-    if(!this.instance){
-      this.instance = new TodoRepositoryImpInMemory();
-    }
-    return this.instance;
   }
 
   async create({

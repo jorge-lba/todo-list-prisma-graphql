@@ -1,4 +1,3 @@
-import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TodoDTO } from "../../repositories/TodoRepository";
 import { CreateTodoUseCase } from "./CreateTodoUseCase";
 
@@ -6,6 +5,10 @@ interface ReceivedData {
   title: string;
   description: string;
 };
+
+interface Controller {
+  handle(data: any): Promise<any>;
+}
 
 class CreateTodoController {
   constructor(private readonly createTodoUseCase: CreateTodoUseCase) {}
@@ -25,4 +28,4 @@ class CreateTodoController {
   }
 }
 
-export { CreateTodoController };
+export { CreateTodoController, Controller };
