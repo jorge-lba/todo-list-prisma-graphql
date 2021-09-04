@@ -43,6 +43,20 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
     return todo;
   }
+
+  async readyById(id: number): Promise<TodoDTO | undefined> {
+    const index = this.todos.findIndex(todo => todo.id === id);
+
+    if(index === -1){
+      return undefined;
+    }
+
+    const todo = this.todos[index];
+
+    todo.done = true;
+
+    return todo;
+  }
 }
 
 export { TodoRepositoryImpInMemory };
