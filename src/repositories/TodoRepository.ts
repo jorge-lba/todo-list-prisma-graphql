@@ -1,12 +1,12 @@
 interface TodoDTO {
-  id: string;
+  id: number;
   title: string;
   description: string;
   done: boolean;
 }
 
 interface TodoRepository {
-  create: () => Promise<TodoDTO>;
+  create: ({ title, description }:TodoDTO) => Promise<TodoDTO>;
 }
 
 export { TodoDTO, TodoRepository };
