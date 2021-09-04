@@ -1,9 +1,4 @@
-import { TodoDTO, TodoRepository } from "../TodoRepository";
-
-interface TodoCreateDTO {
-  title: string;
-  description: string;
-}
+import { TodoDTO, TodoRepository, TodoCreateDTO } from "../TodoRepository";
 
 class TodoRepositoryImpInMemory implements TodoRepository {
   todos: Array<TodoDTO>

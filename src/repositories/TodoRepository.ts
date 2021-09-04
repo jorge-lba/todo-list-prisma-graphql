@@ -5,8 +5,13 @@ interface TodoDTO {
   done: boolean;
 }
 
+interface TodoCreateDTO {
+  title: string;
+  description: string;
+}
+
 interface TodoRepository {
-  create: ({ title, description }:TodoDTO) => Promise<TodoDTO>;
+  create: ({ title, description }:TodoCreateDTO) => Promise<TodoDTO>;
   findAll: () => Promise<TodoDTO[]>;
   findById: (id:number) => Promise<TodoDTO | undefined>;
   toggleDoneById: (id: number) => Promise<TodoDTO | undefined>;
@@ -14,4 +19,4 @@ interface TodoRepository {
   delete: (id: number) => Promise<boolean>;
 }
 
-export { TodoDTO, TodoRepository };
+export { TodoDTO, TodoRepository, TodoCreateDTO };
