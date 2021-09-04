@@ -10,6 +10,7 @@ interface TodoRepository {
   findAll: () => Promise<TodoDTO[]>;
   findById: (id:number) => Promise<TodoDTO | undefined>;
   readyById: (id: number) => Promise<TodoDTO | undefined>;
+  update: (id: number, { title, description }: TodoDTO) => Promise<TodoDTO | undefined>;
 }
 
 export { TodoDTO, TodoRepository };
