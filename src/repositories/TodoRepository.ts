@@ -8,6 +8,7 @@ interface TodoDTO {
 interface TodoRepository {
   create: ({ title, description }:TodoDTO) => Promise<TodoDTO>;
   findAll: () => Promise<TodoDTO[]>;
+  findById: (id:number) => Promise<TodoDTO>;
 }
 
 export { TodoDTO, TodoRepository };
