@@ -11,6 +11,7 @@ interface TodoRepository {
   findById: (id:number) => Promise<TodoDTO | undefined>;
   toggleDoneById: (id: number) => Promise<TodoDTO | undefined>;
   update: (id: number, { title, description }: TodoDTO) => Promise<TodoDTO | undefined>;
+  delete: (id: number) => Promise<boolean>;
 }
 
 export { TodoDTO, TodoRepository };

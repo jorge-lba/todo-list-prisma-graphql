@@ -70,6 +70,18 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
     return todo;
   }
+
+  async delete(id: number): Promise<boolean> {
+    const index = this.todos.findIndex(todo => todo.id === id);
+
+    if(index === -1){
+      return false;
+    }
+
+    this.todos.splice(index, 1);
+
+    return true;
+  }
 }
 
 export { TodoRepositoryImpInMemory };
