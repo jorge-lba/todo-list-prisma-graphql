@@ -33,6 +33,10 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
     return this.todos[index];
   }
+
+  async findAll(): Promise<Array<TodoDTO>> {
+    return this.todos;
+  }
 }
 
 export { TodoRepositoryImpInMemory };
