@@ -57,6 +57,19 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
     return todo;
   }
+
+  async update(id: number, { description, title }: TodoCreateDTO): Promise<TodoDTO | undefined> {
+    const todo = this.todos.find(todo => todo.id === id);
+
+    if(!todo){
+      return undefined;
+    }
+
+    todo.description = description;
+    todo.title = title;
+
+    return todo;
+  }
 }
 
 export { TodoRepositoryImpInMemory };
