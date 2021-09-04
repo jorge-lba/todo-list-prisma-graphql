@@ -6,10 +6,6 @@ interface ReceivedData {
   description: string;
 };
 
-interface Controller {
-  handle(data: any): Promise<any>;
-}
-
 class CreateTodoController {
   constructor(private readonly createTodoUseCase: CreateTodoUseCase) {}
 
@@ -28,4 +24,4 @@ class CreateTodoController {
   }
 }
 
-export { CreateTodoController, Controller };
+export { CreateTodoController };
