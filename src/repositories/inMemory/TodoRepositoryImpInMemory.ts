@@ -37,6 +37,12 @@ class TodoRepositoryImpInMemory implements TodoRepository {
   async findAll(): Promise<Array<TodoDTO>> {
     return this.todos;
   }
+
+  async findById(id: number): Promise<TodoDTO | undefined> {
+    const todo = this.todos.find(todo => todo.id === id);
+
+    return todo;
+  }
 }
 
 export { TodoRepositoryImpInMemory };
