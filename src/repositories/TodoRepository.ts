@@ -5,6 +5,8 @@ interface TodoDTO {
   done: boolean;
 }
 
-interface Todo {
+interface TodoRepository {
   create: () => Promise<TodoDTO>;
 }
+
+export { TodoDTO, TodoRepository };
