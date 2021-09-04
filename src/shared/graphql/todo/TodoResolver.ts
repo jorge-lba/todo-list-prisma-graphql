@@ -1,7 +1,9 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
 import { TodoRepositoryImpInMemory } from "../../../repositories/inMemory/TodoRepositoryImpInMemory";
+import { TodoRepository } from "../../../repositories/TodoRepository";
 import { CreateTodoController } from "../../../useCases/createTodo/CreateTodoController";
-import { createTodoController } from "../../containers/TodoContainer";
+import { ListTodoController } from "../../../useCases/listTodo/ListTodoController";
+import { createTodoController, listTodoController } from "../../containers/TodoContainer";
 import { TodoObjectType } from "./TodoObjectType";
 
 @InputType()
@@ -15,26 +17,20 @@ class CreateTodoInput {
 @Resolver(TodoObjectType)
 class TodoResolver {
   createTodoController: CreateTodoController;
+  listTodoController: ListTodoController;
+  todoRepository: TodoRepository;
+
   constructor(){
-    this.createTodoController = createTodoController(new TodoRepositoryImpInMemory())
+    this.todoRepository = new TodoRepositoryImpInMemory();
+    this.createTodoController = createTodoController(this.todoRepository);
+    this.listTodoController = listTodoController(this.todoRepository);
   }
 
   @Query(() => [TodoObjectType])
   async todos(){
-    return [
-      {
-        id: 1,
-        title: "First Todo",
-        description: "This is the first todo",
-        completed: false
-      },
-      {
-        id: 2,
-        title: "Second Todo",
-        description: "This is the second todo",
-        completed: false
-      }
-    ]
+    const todos = await this.listTodoController.handle();
+
+    return todos
   }
 
   @Mutation(() => TodoObjectType)
