@@ -1,10 +1,17 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
+
 import { TodoRepositoryImpInMemory } from "../../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TodoRepository } from "../../../repositories/TodoRepository";
 import { CreateTodoController } from "../../../useCases/createTodo/CreateTodoController";
 import { ListTodoController } from "../../../useCases/listTodo/ListTodoController";
-import { createTodoController, listTodoController } from "../../containers/TodoContainer";
+import { ToggleDoneTodoController } from "../../../useCases/toggleDoneTodo/toggleDoneTodoController";
 import { TodoObjectType } from "./TodoObjectType";
+
+import { 
+  createTodoController, 
+  listTodoController, 
+  toggleDoneTodoController 
+} from "../../containers/TodoContainer";
 
 @InputType()
 class CreateTodoInput {
@@ -14,16 +21,27 @@ class CreateTodoInput {
   description: string;
 };
 
+@InputType()
+class ToggleDoneTodoInput{
+  @Field()
+  id: number;
+}
+
 @Resolver(TodoObjectType)
 class TodoResolver {
+  todoRepository: TodoRepository;
+
   createTodoController: CreateTodoController;
   listTodoController: ListTodoController;
-  todoRepository: TodoRepository;
+  toggleDoneTodoController: ToggleDoneTodoController;
 
   constructor(){
     this.todoRepository = new TodoRepositoryImpInMemory();
+
     this.createTodoController = createTodoController(this.todoRepository);
     this.listTodoController = listTodoController(this.todoRepository);
+    this.toggleDoneTodoController = toggleDoneTodoController(this.todoRepository);
+  
   }
 
   @Query(() => [TodoObjectType])
@@ -37,6 +55,13 @@ class TodoResolver {
   async createTodo(@Arg("createTodoInput") createTodoInput: CreateTodoInput){
     const todo = await this.createTodoController
       .handle(createTodoInput)
+
+    return todo
+  }
+
+  @Mutation(() => TodoObjectType)
+  async toggleDoneTodo(@Arg("todoId") todoId: number){
+    const todo = await this.toggleDoneTodoController.handle(todoId);
 
     return todo
   }
