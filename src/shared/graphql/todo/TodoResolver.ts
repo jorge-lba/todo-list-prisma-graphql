@@ -51,6 +51,13 @@ class TodoResolver {
     return todos
   }
 
+  @Query(() => TodoObjectType)
+  async findById(@Arg("id") id: number){
+    const todo = await this.todoRepository.findById(id);
+
+    return todo
+  }
+
   @Mutation(() => TodoObjectType)
   async createTodo(@Arg("createTodoInput") createTodoInput: CreateTodoInput){
     const todo = await this.createTodoController
