@@ -52,8 +52,8 @@ class TodoResolver {
   }
 
   @Query(() => TodoObjectType)
-  async findById(@Arg("id") id: number){
-    const todo = await this.todoRepository.findById(id);
+  async findById(@Arg("todoId") todoId: number){
+    const todo = await this.todoRepository.findById(todoId);
 
     return todo
   }
