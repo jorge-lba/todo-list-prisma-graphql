@@ -15,4 +15,10 @@ class TodoObjectType {
   done: boolean;
 }
 
-export { TodoObjectType };
+@ObjectType()
+class TodoStatus {
+  @Field()
+  status: boolean;
+}
+
+export { TodoObjectType, TodoStatus };
