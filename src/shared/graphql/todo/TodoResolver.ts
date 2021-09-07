@@ -5,15 +5,17 @@ import { TodoRepository } from "../../../repositories/TodoRepository";
 import { CreateTodoController } from "../../../useCases/createTodo/CreateTodoController";
 import { ListTodoController } from "../../../useCases/listTodo/ListTodoController";
 import { ToggleDoneTodoController } from "../../../useCases/toggleDoneTodo/toggleDoneTodoController";
-import { TodoObjectType } from "./TodoObjectType";
+import { TodoObjectType, TodoStatus } from "./TodoObjectType";
 
 import { 
   createTodoController, 
   listTodoController, 
   toggleDoneTodoController,
-  updateTodoController
+  updateTodoController,
+  deleteTodoController
 } from "../../containers/TodoContainer";
 import { UpdateTodoController } from "../../../useCases/updateTodo/UpdateTodoController";
+import { DeleteTodoController } from "../../../useCases/deleteTodo/DeleteTodoController";
 
 @InputType()
 class CreateTodoInput {
@@ -39,6 +41,7 @@ class TodoResolver {
   listTodoController: ListTodoController;
   toggleDoneTodoController: ToggleDoneTodoController;
   updateTodoController: UpdateTodoController;
+  deleteTodoController: DeleteTodoController;
 
   constructor(){
     this.todoRepository = new TodoRepositoryImpInMemory();
@@ -47,7 +50,7 @@ class TodoResolver {
     this.listTodoController = listTodoController(this.todoRepository);
     this.toggleDoneTodoController = toggleDoneTodoController(this.todoRepository);
     this.updateTodoController = updateTodoController(this.todoRepository);
-  
+    this.deleteTodoController = deleteTodoController(this.todoRepository);
   }
 
   @Query(() => [TodoObjectType])
@@ -87,6 +90,13 @@ class TodoResolver {
     });
 
     return todo
+  }
+
+  @Mutation(() => TodoStatus)
+  async deleteTodo(@Arg("todoId") todoId: number){
+    const status = await this.deleteTodoController.handle(todoId);
+
+    return { status }
   }
 }
 
