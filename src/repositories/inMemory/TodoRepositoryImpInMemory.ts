@@ -1,23 +1,10 @@
-import { TodoDTO, TodoRepository } from "../TodoRepository";
-
-interface TodoCreateDTO {
-  title: string;
-  description: string;
-}
+import { TodoDTO, TodoRepository, TodoCreateDTO, UpdateTodoDTO } from "../TodoRepository";
 
 class TodoRepositoryImpInMemory implements TodoRepository {
   todos: Array<TodoDTO>
-  private static instance: TodoRepositoryImpInMemory
-
-  private constructor() {
+  
+  constructor() {
     this.todos = new Array<TodoDTO>();
-  }
-
-  static getInstance(): TodoRepositoryImpInMemory {
-    if(!this.instance){
-      this.instance = new TodoRepositoryImpInMemory();
-    }
-    return this.instance;
   }
 
   async create({
@@ -36,6 +23,51 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
   async findAll(): Promise<Array<TodoDTO>> {
     return this.todos;
+  }
+
+  async findById(id: number): Promise<TodoDTO | undefined> {
+    const todo = this.todos.find(todo => todo.id === id);
+
+    return todo;
+  }
+
+  async toggleDoneById(id: number): Promise<TodoDTO | undefined> {
+    const index = this.todos.findIndex(todo => todo.id === id);
+
+    if(index === -1){
+      return undefined;
+    }
+
+    const todo = this.todos[index];
+
+    todo.done = !todo.done;
+
+    return todo;
+  }
+
+  async update(id: number, { description, title }: UpdateTodoDTO): Promise<TodoDTO | undefined> {
+    const todo = this.todos.find(todo => todo.id === id);
+
+    if(!todo){
+      return undefined;
+    }
+
+    if(description) todo.description = description;
+    if(title) todo.title = title;
+
+    return todo;
+  }
+
+  async delete(id: number): Promise<boolean> {
+    const index = this.todos.findIndex(todo => todo.id === id);
+
+    if(index === -1){
+      return false;
+    }
+
+    this.todos.splice(index, 1);
+
+    return true;
   }
 }
 
