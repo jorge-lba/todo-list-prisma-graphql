@@ -10,8 +10,10 @@ import { TodoObjectType } from "./TodoObjectType";
 import { 
   createTodoController, 
   listTodoController, 
-  toggleDoneTodoController 
+  toggleDoneTodoController,
+  updateTodoController
 } from "../../containers/TodoContainer";
+import { UpdateTodoController } from "../../../useCases/updateTodo/UpdateTodoController";
 
 @InputType()
 class CreateTodoInput {
@@ -22,10 +24,12 @@ class CreateTodoInput {
 };
 
 @InputType()
-class ToggleDoneTodoInput{
-  @Field()
-  id: number;
-}
+class UpdateTodoInput {
+  @Field({ nullable: true })
+  title?: string;
+  @Field({ nullable: true })
+  description?: string;
+};
 
 @Resolver(TodoObjectType)
 class TodoResolver {
@@ -34,6 +38,7 @@ class TodoResolver {
   createTodoController: CreateTodoController;
   listTodoController: ListTodoController;
   toggleDoneTodoController: ToggleDoneTodoController;
+  updateTodoController: UpdateTodoController;
 
   constructor(){
     this.todoRepository = new TodoRepositoryImpInMemory();
@@ -41,6 +46,7 @@ class TodoResolver {
     this.createTodoController = createTodoController(this.todoRepository);
     this.listTodoController = listTodoController(this.todoRepository);
     this.toggleDoneTodoController = toggleDoneTodoController(this.todoRepository);
+    this.updateTodoController = updateTodoController(this.todoRepository);
   
   }
 
@@ -69,6 +75,16 @@ class TodoResolver {
   @Mutation(() => TodoObjectType)
   async toggleDoneTodo(@Arg("todoId") todoId: number){
     const todo = await this.toggleDoneTodoController.handle(todoId);
+
+    return todo
+  }
+
+  @Mutation(() => TodoObjectType)
+  async updateTodo(@Arg("todoId") todoId: number, @Arg("updateTodoInput") updateTodoInput: UpdateTodoInput){
+    const todo = await this.updateTodoController.handle({
+      id: todoId,
+      ...updateTodoInput
+    });
 
     return todo
   }
