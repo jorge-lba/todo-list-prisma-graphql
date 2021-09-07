@@ -1,4 +1,4 @@
-import { TodoDTO, TodoRepository, TodoCreateDTO } from "../TodoRepository";
+import { TodoDTO, TodoRepository, TodoCreateDTO, UpdateTodoDTO } from "../TodoRepository";
 
 class TodoRepositoryImpInMemory implements TodoRepository {
   todos: Array<TodoDTO>
@@ -45,15 +45,15 @@ class TodoRepositoryImpInMemory implements TodoRepository {
     return todo;
   }
 
-  async update(id: number, { description, title }: TodoCreateDTO): Promise<TodoDTO | undefined> {
+  async update(id: number, { description, title }: UpdateTodoDTO): Promise<TodoDTO | undefined> {
     const todo = this.todos.find(todo => todo.id === id);
 
     if(!todo){
       return undefined;
     }
 
-    todo.description = description;
-    todo.title = title;
+    if(description) todo.description = description;
+    if(title) todo.title = title;
 
     return todo;
   }
