@@ -9,4 +9,4 @@ class ToggleDoneTodoUseCase {
   }
 }
 
-export default ToggleDoneTodoUseCase;
+export { ToggleDoneTodoUseCase };

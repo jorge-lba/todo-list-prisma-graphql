@@ -4,7 +4,7 @@ import { CreateTodoUseCase } from "../../useCases/createTodo/CreateTodoUseCase"
 import { ListTodoController } from "../../useCases/listTodo/ListTodoController"
 import { ListTodoUseCase } from "../../useCases/listTodo/ListTodoUseCase"
 import { ToggleDoneTodoController } from "../../useCases/toggleDoneTodo/toggleDoneTodoController"
-import ToggleDoneTodoUseCase from "../../useCases/toggleDoneTodo/toggleDoneTodoUseCase"
+import { ToggleDoneTodoUseCase } from "../../useCases/toggleDoneTodo/toggleDoneTodoUseCase"
 import { UpdateTodoController } from "../../useCases/updateTodo/UpdateTodoController"
 import { UpdateTodoUseCase } from "../../useCases/updateTodo/UpdateTodoUseCase"
 
