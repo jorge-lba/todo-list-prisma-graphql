@@ -4,7 +4,7 @@ class FindByIdTodoUseCase {
   constructor(private readonly todoRepository: TodoRepository) {}
 
   async execute(id: number): Promise<TodoDTO | undefined> {
-    return this.todoRepository.findById(id);
+    return await this.todoRepository.findById(id);
   }
 }
 
