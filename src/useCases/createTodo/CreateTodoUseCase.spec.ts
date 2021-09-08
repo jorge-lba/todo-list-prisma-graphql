@@ -32,6 +32,27 @@ describe('Create Todo Use Case', () => {
     expect(todo.done).toBe(expectedDone)
   })
 
+  it('should not repeat an id', async () => {
+    await createTodo({
+      title: 'Not Repeat Id',
+      description: 'Should not repeat an Id',
+    })
+
+    const {id} = await createTodo({
+      title: 'Not Repeat Id',
+      description: 'Should not repeat an Id',
+    })
+
+    repository.delete(id)
+
+    const todo = await createTodo({
+      title: 'Not Repeat Id',
+      description: 'Should not repeat an Id',
+    })
+
+    expect(todo.id).not.toBe(id)
+  })
+
   const create = (createUseCase: CreateTodoUseCase) => 
     async ( data: TodoCreateDTO ): Promise<TodoDTO> => await createUseCase.execute(data)
   
