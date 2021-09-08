@@ -33,12 +33,13 @@ describe('Create Todo Use Case', () => {
   })
 
   it('should not repeat an id', async () => {
-    await createTodo({
+    
+    const {id} = await createTodo({
       title: 'Not Repeat Id',
       description: 'Should not repeat an Id',
     })
-
-    const {id} = await createTodo({
+    
+    await createTodo({
       title: 'Not Repeat Id',
       description: 'Should not repeat an Id',
     })
