@@ -16,6 +16,8 @@ import {
 } from "../../containers/TodoContainer";
 import { UpdateTodoController } from "../../../useCases/updateTodo/UpdateTodoController";
 import { DeleteTodoController } from "../../../useCases/deleteTodo/DeleteTodoController";
+import { TodoRepositoryImp } from "../../../repositories/TodoRepositoryImp";
+import { Database } from "../../database/prisma";
 
 @InputType()
 class CreateTodoInput {
@@ -44,7 +46,8 @@ class TodoResolver {
   deleteTodoController: DeleteTodoController;
 
   constructor(){
-    this.todoRepository = new TodoRepositoryImpInMemory();
+    //@ts-ignore
+    this.todoRepository = new TodoRepositoryImp(Database);
 
     this.createTodoController = createTodoController(this.todoRepository);
     this.listTodoController = listTodoController(this.todoRepository);
