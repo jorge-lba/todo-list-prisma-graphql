@@ -11,8 +11,12 @@ class TodoRepositoryImpInMemory implements TodoRepository {
     title,
     description,
   }: TodoCreateDTO): Promise<TodoDTO> {
+    const lastTodo = this.todos[this.todos.length - 1];
+
+    const lastId = lastTodo ? lastTodo.id : 0;
+
     const index = await this.todos.push({
-      id: this.todos.length + 1,
+      id: lastId + 1,
       title,
       description,
       done: false
