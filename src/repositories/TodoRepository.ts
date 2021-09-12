@@ -1,8 +1,10 @@
 interface TodoDTO {
   id: number;
   title: string;
-  description: string;
+  description?: string | null;
   done: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 interface TodoCreateDTO {
