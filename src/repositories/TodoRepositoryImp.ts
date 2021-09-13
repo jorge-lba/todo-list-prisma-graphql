@@ -40,8 +40,23 @@ class TodoRepositoryImp implements TodoRepository {
 
     return todos;
   };
+
+  async findById(id: number):Promise<TodoDTO | undefined | null>{
+    const todo = await this.model.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        done: true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    });
+
+    return todo;
+  };
   
-  findById: (id: number) => Promise<TodoDTO | undefined>;
   toggleDoneById: (id: number) => Promise<TodoDTO | undefined>;
   update: (id: number, { title, description }: UpdateTodoDTO) => Promise<TodoDTO | undefined>;
   delete: (id: number) => Promise<boolean>;
