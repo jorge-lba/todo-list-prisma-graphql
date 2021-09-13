@@ -80,7 +80,13 @@ class TodoRepositoryImp implements TodoRepository {
     return todo;
   };
   
-  delete: (id: number) => Promise<boolean>;
+  async delete(id: number):Promise<boolean>{
+    await this.model.delete({
+      where: { id },
+    });
+
+    return true;
+  };
 }
 
 export { TodoRepositoryImp };
