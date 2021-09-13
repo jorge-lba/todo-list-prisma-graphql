@@ -11,8 +11,16 @@ class TodoRepositoryImp implements TodoRepository {
   }
 
   async create({ title, description }: TodoCreateDTO): Promise<TodoDTO> {
-    const todoResponse = await this.model.create({ 
-      data: { title, description } 
+    const todo = await this.model.create({ 
+      data: { title, description },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        done: true,
+        createdAt: true,
+        updatedAt: true,
+      }
     });
 
     return {
