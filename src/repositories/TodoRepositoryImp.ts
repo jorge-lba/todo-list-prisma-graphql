@@ -23,15 +23,24 @@ class TodoRepositoryImp implements TodoRepository {
       }
     });
 
-    return {
-      id: todoResponse.id,
-      title: todoResponse.title,
-      description: todoResponse.description,
-      done: todoResponse.done,
-    }
+    return todo
   };
 
-  findAll: () => Promise<TodoDTO[]>;
+  async findAll():Promise<TodoDTO[]> {
+    const todos = await this.model.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        done: true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    });
+
+    return todos;
+  };
+  
   findById: (id: number) => Promise<TodoDTO | undefined>;
   toggleDoneById: (id: number) => Promise<TodoDTO | undefined>;
   update: (id: number, { title, description }: UpdateTodoDTO) => Promise<TodoDTO | undefined>;
