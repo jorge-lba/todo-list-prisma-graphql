@@ -1,13 +1,16 @@
-import { Prisma, todo } from ".prisma/client";
+import { Prisma, PrismaClient, todo } from ".prisma/client";
 import { Database } from "../shared/database/prisma";
 import { TodoCreateDTO, TodoDTO, TodoRepository, UpdateTodoDTO } from "./TodoRepository";
 
 class TodoRepositoryImp implements TodoRepository {
   model: Prisma.todoDelegate<todo>;
+  prisma: PrismaClient
 
   constructor(database: Database){
     //@ts-ignore
     this.model = database.instance.prisma.todo;
+    //@ts-ignore
+    this.prisma = database.instance.prisma;
   }
 
   async create({ title, description }: TodoCreateDTO): Promise<TodoDTO> {
@@ -56,8 +59,18 @@ class TodoRepositoryImp implements TodoRepository {
 
     return todo;
   };
-  
-  toggleDoneById: (id: number) => Promise<TodoDTO | undefined>;
+
+  async toggleDoneById(id: number):Promise<TodoDTO | undefined>{
+    const [ todo ] = await this.prisma.$queryRaw<Array<todo>>`
+      UPDATE todo
+      SET done = NOT done
+      WHERE id = ${id}
+      RETURNING *
+    `;
+    
+    return todo;
+  };
+
   update: (id: number, { title, description }: UpdateTodoDTO) => Promise<TodoDTO | undefined>;
   delete: (id: number) => Promise<boolean>;
 }
