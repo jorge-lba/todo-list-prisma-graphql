@@ -67,11 +67,19 @@ class TodoRepositoryImp implements TodoRepository {
       WHERE id = ${id}
       RETURNING *
     `;
-    
+
     return todo;
   };
 
-  update: (id: number, { title, description }: UpdateTodoDTO) => Promise<TodoDTO | undefined>;
+  async update(id: number, { title, description }: UpdateTodoDTO):Promise<TodoDTO | undefined>{
+    const todo = await this.model.update({
+      where: { id },
+      data: { title, description },
+    });
+
+    return todo;
+  };
+  
   delete: (id: number) => Promise<boolean>;
 }
 
