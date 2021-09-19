@@ -3,6 +3,8 @@ import { CreateTodoController } from "../../useCases/createTodo/CreateTodoContro
 import { CreateTodoUseCase } from "../../useCases/createTodo/CreateTodoUseCase"
 import { DeleteTodoController } from "../../useCases/deleteTodo/DeleteTodoController"
 import { DeleteTodoUseCase } from "../../useCases/deleteTodo/DeleteTodoUseCase"
+import { FindByIdTodoController } from "../../useCases/findByIdTodo/FindByIdTodoController"
+import { FindByIdTodoUseCase } from "../../useCases/findByIdTodo/FindByIdTodoUseCase"
 import { ListTodoController } from "../../useCases/listTodo/ListTodoController"
 import { ListTodoUseCase } from "../../useCases/listTodo/ListTodoUseCase"
 import { ToggleDoneTodoController } from "../../useCases/toggleDoneTodo/toggleDoneTodoController"
@@ -21,6 +23,12 @@ const listTodoController = (repository: TodoRepository) => {
 
   return new ListTodoController(useCase)
 }  
+
+const findByIdController = (repository: TodoRepository) => {
+  const useCase = new FindByIdTodoUseCase(repository)
+
+  return new FindByIdTodoController(useCase)
+}
 
 const toggleDoneTodoController = (repository: TodoRepository) => {
   const useCase = new ToggleDoneTodoUseCase(repository)
@@ -44,6 +52,7 @@ const deleteTodoController = (repository: TodoRepository) => {
 export  { 
   createTodoController, 
   listTodoController, 
+  findByIdController,
   toggleDoneTodoController, 
   updateTodoController,
   deleteTodoController 

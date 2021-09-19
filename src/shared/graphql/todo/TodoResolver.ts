@@ -1,6 +1,5 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
 
-import { TodoRepositoryImpInMemory } from "../../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TodoRepository } from "../../../repositories/TodoRepository";
 import { CreateTodoController } from "../../../useCases/createTodo/CreateTodoController";
 import { ListTodoController } from "../../../useCases/listTodo/ListTodoController";
@@ -12,12 +11,14 @@ import {
   listTodoController, 
   toggleDoneTodoController,
   updateTodoController,
-  deleteTodoController
+  deleteTodoController,
+  findByIdController
 } from "../../containers/TodoContainer";
 import { UpdateTodoController } from "../../../useCases/updateTodo/UpdateTodoController";
 import { DeleteTodoController } from "../../../useCases/deleteTodo/DeleteTodoController";
 import { TodoRepositoryImp } from "../../../repositories/TodoRepositoryImp";
 import { Database } from "../../database/prisma";
+import { FindByIdTodoController } from "../../../useCases/findByIdTodo/FindByIdTodoController";
 
 @InputType()
 class CreateTodoInput {
@@ -41,6 +42,7 @@ class TodoResolver {
 
   createTodoController: CreateTodoController;
   listTodoController: ListTodoController;
+  findByIdController: FindByIdTodoController;
   toggleDoneTodoController: ToggleDoneTodoController;
   updateTodoController: UpdateTodoController;
   deleteTodoController: DeleteTodoController;
@@ -51,6 +53,7 @@ class TodoResolver {
 
     this.createTodoController = createTodoController(this.todoRepository);
     this.listTodoController = listTodoController(this.todoRepository);
+    this.findByIdController = findByIdController(this.todoRepository);
     this.toggleDoneTodoController = toggleDoneTodoController(this.todoRepository);
     this.updateTodoController = updateTodoController(this.todoRepository);
     this.deleteTodoController = deleteTodoController(this.todoRepository);
@@ -65,7 +68,7 @@ class TodoResolver {
 
   @Query(() => TodoObjectType)
   async findById(@Arg("todoId") todoId: number){
-    const todo = await this.todoRepository.findById(todoId);
+    const todo = await this.findByIdController.handle(todoId);
 
     return todo
   }
