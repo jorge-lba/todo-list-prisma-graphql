@@ -1,4 +1,6 @@
+import { TagRepositoryImpInMemory } from "../../repositories/inMemory/TagRepositoryImpInMemory";
 import { CreateTagDTO, TagDTO, TagRepository } from "../../repositories/TagRepository";
+import { CreateTagUseCase } from "./CreateTagUseCase";
 
 describe('Create Tag Use Case', () => {
   let repository: TagRepository;
@@ -7,7 +9,7 @@ describe('Create Tag Use Case', () => {
   let createTag: (data: CreateTagDTO) => Promise<TagDTO>;
 
   beforeEach(() => {
-    repository = new TagRepositoryInMemory();
+    repository = new TagRepositoryImpInMemory();
     createUseCase = new CreateTagUseCase(repository);
 
     createTag = create(createUseCase);
