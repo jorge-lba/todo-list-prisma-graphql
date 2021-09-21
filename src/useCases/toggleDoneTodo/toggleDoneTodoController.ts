@@ -1,5 +1,5 @@
 import { TodoDTO } from "../../repositories/TodoRepository";
-import ToggleDoneTodoUseCase from "./toggleDoneTodoUseCase";
+import { ToggleDoneTodoUseCase } from "./toggleDoneTodoUseCase";
 
 class ToggleDoneTodoController {
   constructor(private readonly toggleDoneTodoUseCase: ToggleDoneTodoUseCase) {}

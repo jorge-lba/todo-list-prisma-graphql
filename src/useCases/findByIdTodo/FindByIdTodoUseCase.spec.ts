@@ -6,7 +6,7 @@ describe('Find By Id Use Case', () => {
   let repository: TodoRepository;
   let findByIdUseCase: FindByIdTodoUseCase;
 
-  let findByIdTodo: (id: number) => Promise<TodoDTO | undefined>;
+  let findByIdTodo: (id: number) => Promise<TodoDTO | undefined | null>;
 
   beforeAll(() => {
     repository = new TodoRepositoryImpInMemory();
@@ -33,5 +33,5 @@ describe('Find By Id Use Case', () => {
   })
 
   const findById = (findByIdUseCase: FindByIdTodoUseCase) =>
-    async (id: number): Promise<TodoDTO | undefined> => await findByIdUseCase.execute(id);
+    async (id: number): Promise<TodoDTO | undefined | null> => await findByIdUseCase.execute(id);
 })
