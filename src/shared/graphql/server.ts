@@ -1,21 +1,16 @@
 import 'reflect-metadata'
 
-import { buildSchema } from 'type-graphql'
 import { ApolloServer } from 'apollo-server'
-import { TodoResolver } from './todo/TodoResolver'
+import { app } from './app'
 
-const server = async () => {
-  const schema = await buildSchema({
-    resolvers: [TodoResolver]
-  })
+const server = async (app: () => Promise<ApolloServer>) => {
+  const server = await app()
 
-  const apolloServer = new ApolloServer({ schema })
-
-  apolloServer
+  return server
     .listen({port: 4100})
     .then(() => 
       console.log('Server is running on http://localhost:4100')
     )
 }
 
-server()
+server(app)
