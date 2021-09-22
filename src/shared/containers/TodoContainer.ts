@@ -1,4 +1,7 @@
+import { TagRepository } from "../../repositories/TagRepository"
 import { TodoRepository } from "../../repositories/TodoRepository"
+import { CreateTagController } from "../../useCases/createTag/CreateTagController"
+import { CreateTagUseCase } from "../../useCases/createTag/CreateTagUseCase"
 import { CreateTodoController } from "../../useCases/createTodo/CreateTodoController"
 import { CreateTodoUseCase } from "../../useCases/createTodo/CreateTodoUseCase"
 import { DeleteTodoController } from "../../useCases/deleteTodo/DeleteTodoController"
@@ -16,6 +19,12 @@ const createTodoController = (repository: TodoRepository) => {
   const useCase = new CreateTodoUseCase(repository)
 
   return new CreateTodoController(useCase)
+}
+
+const createTagController = (repository: TagRepository) => {
+  const useCase = new CreateTagUseCase(repository)
+
+  return new CreateTagController(useCase)
 }
 
 const listTodoController = (repository: TodoRepository) => {
@@ -51,6 +60,7 @@ const deleteTodoController = (repository: TodoRepository) => {
 
 export  { 
   createTodoController, 
+  createTagController,
   listTodoController, 
   findByIdController,
   toggleDoneTodoController, 
