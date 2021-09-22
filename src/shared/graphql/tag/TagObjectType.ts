@@ -1,5 +1,6 @@
-import { Field, ID } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 
+@ObjectType()
 class TagObjectType {
   @Field(() => ID!)
   id: number;
