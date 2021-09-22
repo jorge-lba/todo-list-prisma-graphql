@@ -3,6 +3,7 @@ import { TagRepository } from "../../../repositories/TagRepository";
 import { TagRepositoryImp } from "../../../repositories/TagRepositoryImp";
 import { CreateTagController } from "../../../useCases/createTag/CreateTagController";
 import { createTagController } from "../../containers/TodoContainer";
+import { Database } from "../../database/prisma";
 import { TagObjectType } from "./TagObjectType";
 
 @InputType()
@@ -21,7 +22,8 @@ class TagResolver {
   createTagController: CreateTagController
 
   constructor() {
-    this.tagRepository = new TagRepositoryImp();
+    //@ts-ignore
+    this.tagRepository = new TagRepositoryImp(Database);
 
     this.createTagController = createTagController(this.tagRepository);
   }
