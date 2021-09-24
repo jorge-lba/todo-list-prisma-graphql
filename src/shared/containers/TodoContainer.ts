@@ -8,6 +8,8 @@ import { DeleteTodoController } from "../../useCases/deleteTodo/DeleteTodoContro
 import { DeleteTodoUseCase } from "../../useCases/deleteTodo/DeleteTodoUseCase"
 import { FindByIdTodoController } from "../../useCases/findByIdTodo/FindByIdTodoController"
 import { FindByIdTodoUseCase } from "../../useCases/findByIdTodo/FindByIdTodoUseCase"
+import { ListTagController } from "../../useCases/listTag/ListTagController"
+import { ListTagUseCase } from "../../useCases/listTag/ListTagUseCase"
 import { ListTodoController } from "../../useCases/listTodo/ListTodoController"
 import { ListTodoUseCase } from "../../useCases/listTodo/ListTodoUseCase"
 import { ToggleDoneTodoController } from "../../useCases/toggleDoneTodo/toggleDoneTodoController"
@@ -32,6 +34,12 @@ const listTodoController = (repository: TodoRepository) => {
 
   return new ListTodoController(useCase)
 }  
+
+const listTagController = (repository: TagRepository) => {
+  const useCase = new ListTagUseCase(repository)
+
+  return new ListTagController(useCase)
+} 
 
 const findByIdController = (repository: TodoRepository) => {
   const useCase = new FindByIdTodoUseCase(repository)
@@ -62,6 +70,7 @@ export  {
   createTodoController, 
   createTagController,
   listTodoController, 
+  listTagController,
   findByIdController,
   toggleDoneTodoController, 
   updateTodoController,
