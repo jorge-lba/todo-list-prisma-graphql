@@ -1,11 +1,5 @@
 import { ApolloServer, gql } from "apollo-server-express";
-import { TodoRepositoryImpInMemory } from "../../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { app } from "../app";
-
-jest.mock('../../../repositories/TodoRepositoryImp', () => ({
-  __esModule: true,
-  TodoRepositoryImp: TodoRepositoryImpInMemory
-}))
 
 describe("Todo Integration", () => {
   let server: ApolloServer;
