@@ -43,4 +43,27 @@ describe('Tag Integration', () => {
       },
     });
   });
+
+
+  it('should be list all tags', async() => {
+    const res = await server.executeOperation({
+      query: gql`query TodosQuery {
+        tags {
+          id
+          name
+          description
+        }
+      }`,
+    });
+
+    const todos = res.data;
+
+    expect(todos).toEqual({
+      tags: [{
+          id: '1',
+          name: 'Prisma',
+          description: 'Prisma is a GraphQL client for your existing database.',
+        }]
+    });
+  })
 });

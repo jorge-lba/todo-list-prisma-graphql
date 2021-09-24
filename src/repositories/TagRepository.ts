@@ -13,6 +13,7 @@ interface CreateTagDTO {
 
 interface TagRepository {
   create: ({ name, description }:CreateTagDTO) => Promise<TagDTO>;
+  findAll: () => Promise<TagDTO[]>;
 }
 
 export { TagDTO, TagRepository, CreateTagDTO };

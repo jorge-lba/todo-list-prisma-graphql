@@ -24,6 +24,20 @@ class TagRepositoryImp implements TagRepository {
     
     return tag;
   };
+
+  async findAll(): Promise<TagDTO[]>{
+    const tags = await this.model.findMany({
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        createdAt: true,
+        updatedAt: true
+      }
+    });
+
+    return tags;
+  };
 }
 
 export { TagRepositoryImp };
