@@ -14,15 +14,15 @@ services:
     volumes: 
       - pgdata:/data/postgres
     networks:
-      - app_net
+      - net-prisma
 
 volumes: 
   pgdata:
     driver: local
 
 networks:
-  app_net:
+  net-prisma:
     ipam:
       driver: default
       config:
-        - subnet: "172.10.208.0/24"
+        - subnet: "172.14.208.0/24"
