@@ -22,6 +22,10 @@ class TagRepositoryImpInMemory implements TagRepository {
 
     return this.tags[index];
   };
+
+  async findAll(): Promise<TagDTO[]>{
+    return this.tags;
+  };
 }
 
 export { TagRepositoryImpInMemory }
