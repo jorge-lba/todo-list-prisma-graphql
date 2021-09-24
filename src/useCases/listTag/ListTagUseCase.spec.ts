@@ -1,5 +1,6 @@
 import { TagRepositoryImpInMemory } from "../../repositories/inMemory/TagRepositoryImpInMemory";
 import { TagDTO, TagRepository } from "../../repositories/TagRepository";
+import { ListTagUseCase } from "./ListTagUseCase";
 
 describe('List Tag Use Case', () => {
   let repository: TagRepository;
