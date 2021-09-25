@@ -26,7 +26,7 @@ case $value in
       echo "Os testes não foram executados"
     ;;
     ''|*[!0-9]*) 
-      echo "O comando não é um numero valido" 
+      echo "O comando não é valido" 
       exit 1
     ;;
     *) 
