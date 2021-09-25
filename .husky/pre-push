@@ -1,4 +1,16 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run test:all
+echo "Run Tests:"
+echo ""
+
+sleep 1
+
+docker-compose up -d &&
+npx dotenv -e .env.test npx prisma migrate dev --name init &&
+npx dotenv -e .env.test jest -i &&
+docker-compose down
+
+sleep 5
+
+echo "Finished!"
