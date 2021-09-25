@@ -36,7 +36,7 @@ case $value in
 
       npx dotenv -e .env.test jest -i
 
-      docker-compose down
+      docker-compose down --volumes
     ;;
     SKIP|skip)
       echo "Os testes não foram executados"
@@ -63,7 +63,7 @@ case $value in
 
       npx dotenv -e .env.test jest -i -u -t="$option"
       
-      docker-compose down
+      docker-compose down --volumes
     ;;
 esac
 
