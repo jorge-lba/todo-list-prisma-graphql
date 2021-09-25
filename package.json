@@ -10,7 +10,8 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "test": "dotenv -e .env.test jest -i",
-    "test:all": "yarn docker:up && yarn migrate:init && yarn test && yarn docker:down"
+    "test:all": "yarn docker:up && yarn migrate:init && yarn test && yarn docker:down",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
@@ -18,7 +19,8 @@
     "jest": "^27.1.0",
     "ts-jest": "^27.0.5",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "husky": "^7.0.0"
   },
   "dependencies": {
     "@prisma/client": "^3.1.1",
