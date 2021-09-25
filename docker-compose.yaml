@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:13
+    container_name: integration-tests-prisma
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTFRES_HOST=localhost
+      - POSTGRES_USER=prisma
+      - POSTGRES_PASSWORD=prismasql 
+      - POSTGRES_DB=tests
+    volumes: 
+      - pgdata:/data/postgres
+    networks:
+      - net-prisma
+
+volumes: 
+  pgdata:
+    driver: local
+
+networks:
+  net-prisma:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.14.208.0/24"

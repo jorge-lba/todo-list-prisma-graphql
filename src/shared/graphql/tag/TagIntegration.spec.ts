@@ -1,11 +1,5 @@
 import { ApolloServer, gql } from "apollo-server-express";
-import { TagRepositoryImpInMemory } from "../../../repositories/inMemory/TagRepositoryImpInMemory";
 import { app } from "../app";
-
-jest.mock('../../../repositories/TagRepositoryImp', () => ({
-  __esModule: true,
-  TagRepositoryImp: TagRepositoryImpInMemory
-}));
 
 describe('Tag Integration', () => {
   let server: ApolloServer
