@@ -4,6 +4,7 @@ import { buildSchema } from 'type-graphql'
 import { ApolloServer } from 'apollo-server'
 import { TodoResolver } from './todo/TodoResolver'
 import { TagResolver } from './tag/TagResolver'
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 const app = async (): Promise<ApolloServer> => {
   const schema = await buildSchema({
@@ -21,7 +22,3 @@ const app = async (): Promise<ApolloServer> => {
 }
 
 export { app };
-
-function ApolloServerPluginLandingPageGraphQLPlayground(): import("apollo-server-core").PluginDefinition {
-  throw new Error('Function not implemented.')
-}
