@@ -1,16 +1,23 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "Run Tests:"
+echo "Rodando todos os testes"
 echo ""
+      
+docker-compose up -d 
 
-sleep 1
+prismaConnection=true
 
-docker-compose up -d &&
-npx dotenv -e .env.test npx prisma migrate dev --name init &&
-npx dotenv -e .env.test jest -i &&
+while $prismaConnection; do
+  echo "Connection Prisma..."
+  npx dotenv -e .env.test npx prisma migrate dev --name init &&
+  prismaConnection=false   
+
+  sleep 1     
+done 
+
+npx dotenv -e .env.test jest -i
+
 docker-compose down
-
-sleep 5
 
 echo "Finished!"
