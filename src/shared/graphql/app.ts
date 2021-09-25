@@ -10,9 +10,18 @@ const app = async (): Promise<ApolloServer> => {
     resolvers: [TodoResolver, TagResolver]
   })
 
-  const apolloServer = new ApolloServer({ schema })
+  const apolloServer = new ApolloServer({ 
+    schema,
+    plugins: [
+      ApolloServerPluginLandingPageGraphQLPlayground()
+    ]
+  })
 
   return apolloServer  
 }
 
 export { app };
+
+function ApolloServerPluginLandingPageGraphQLPlayground(): import("apollo-server-core").PluginDefinition {
+  throw new Error('Function not implemented.')
+}
