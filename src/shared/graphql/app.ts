@@ -15,7 +15,8 @@ const app = async (): Promise<ApolloServer> => {
     schema,
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground()
-    ]
+    ],
+    introspection: true
   })
 
   return apolloServer  
