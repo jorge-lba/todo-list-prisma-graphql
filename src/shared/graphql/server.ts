@@ -7,7 +7,7 @@ const server = async (app: () => Promise<ApolloServer>) => {
   const server = await app()
 
   return server
-    .listen({port: 4100})
+    .listen({port: process.env.PORT})
     .then(() => 
       console.log('Server is running on http://localhost:4100')
     )
