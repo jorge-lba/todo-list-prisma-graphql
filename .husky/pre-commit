@@ -1,8 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-grep -r  describe\( ./src/* >> .husky/tests/decribes.txt
-
-exit 0
-
 npm run test:all
