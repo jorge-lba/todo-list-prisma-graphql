@@ -1,0 +1,37 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+: > .husky/tests/decribes-lines.txt
+grep -r  describe\( ./src/* >> .husky/tests/decribes-lines.txt
+
+: > .husky/tests/decribes.txt
+egrep -o -r  "[\"\'](.*?)[\"\']" .husky/tests/decribes-lines.txt | sed 's/"//g' | sed "s/'//g" >> .husky/tests/decribes.txt
+
+echo "Testes disponives para rodar:"
+echo ""
+
+cat -n .husky/tests/decribes.txt
+
+echo "    ALL - Rodar todos os testes"
+echo "    SKIP - Pular todos os testes"
+echo ""
+
+read -p "Digite a opção desejada:" value </dev/tty
+
+case $value in
+    ALL|all)
+      npm run test:all
+    ;;
+    SKIP|skip)
+      echo "Os testes não foram executados"
+    ;;
+    ''|*[!0-9]*) 
+      echo "O comando não é valido" 
+      exit 1
+    ;;
+    *) 
+      option=$(sed -n "$value"p .husky/tests/decribes.txt)
+      echo "Executando teste: $option"
+      npx jest -u -t="$option"
+    ;;
+esac
