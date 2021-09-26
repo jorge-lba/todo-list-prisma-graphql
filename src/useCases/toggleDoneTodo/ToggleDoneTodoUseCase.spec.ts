@@ -1,15 +1,21 @@
+import { TagTodoRepositoryImpInMemory } from "../../repositories/inMemory/TagTodoRepositoryImpInMemory";
+import { TagTodoRepository } from "../../repositories/TagTodoRepository";
 import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
 import { ToggleDoneTodoUseCase } from "./toggleDoneTodoUseCase";
 
 describe('Toggle Done Todo Use Case', () => {
+  let tagTodoRepository: TagTodoRepository
   let repository: TodoRepository;
   let toggleDoneUseCase: ToggleDoneTodoUseCase;
 
   let toggleDoneTodo: (todoId: number) => Promise<TodoDTO | undefined>;
 
   beforeAll(() => {
-    repository = new TodoRepositoryImpInMemory();
+    tagTodoRepository = new TagTodoRepositoryImpInMemory();
+    repository = new TodoRepositoryImpInMemory(
+      tagTodoRepository
+    );
     toggleDoneUseCase = new ToggleDoneTodoUseCase(repository);
 
     toggleDoneTodo = toggleDone(toggleDoneUseCase);
