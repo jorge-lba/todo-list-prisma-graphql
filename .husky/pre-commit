@@ -20,7 +20,23 @@ read -p "Digite a opção desejada:" value </dev/tty
 
 case $value in
     ALL|all)
-      npm run test:all
+      echo "Rodando todos os testes"
+      
+      docker-compose up -d 
+
+      prismaConnection=true
+
+      while $prismaConnection; do
+        echo "Connection Prisma..."
+        npx dotenv -e .env.test npx prisma migrate dev --name init &&
+        prismaConnection=false   
+
+        sleep 1     
+      done 
+
+      npx dotenv -e .env.test jest -i
+
+      docker-compose down --volumes
     ;;
     SKIP|skip)
       echo "Os testes não foram executados"
@@ -32,6 +48,23 @@ case $value in
     *) 
       option=$(sed -n "$value"p .husky/tests/decribes.txt)
       echo "Executando teste: $option"
-      npx jest -u -t="$option"
+      echo ""
+      docker-compose up -d 
+
+      prismaConnection=true
+
+      while $prismaConnection; do
+        echo "Connection Prisma..."
+        npx dotenv -e .env.test npx prisma migrate dev --name init &&
+        prismaConnection=false   
+
+        sleep 1     
+      done 
+
+      npx dotenv -e .env.test jest -i -u -t="$option"
+      
+      docker-compose down --volumes
     ;;
 esac
+
+echo "Finished!"

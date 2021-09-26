@@ -5,6 +5,8 @@
   "author": "Jorge Alegretti <jorgeluiz.b.alegretti@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/src/shared/graphql/server.js",
     "dev": "ts-node-dev src/shared/graphql/server.ts",
     "migrate:init": "dotenv -e .env.test npx prisma migrate dev --name init",
     "docker:up": "docker-compose up -d",
