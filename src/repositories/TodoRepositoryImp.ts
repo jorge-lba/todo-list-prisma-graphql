@@ -87,6 +87,10 @@ class TodoRepositoryImp implements TodoRepository {
 
     return true;
   };
+
+  async addTags(postId: number, tagIds: number[]): Promise<void>{
+    
+  };
 }
 
 export { TodoRepositoryImp };
