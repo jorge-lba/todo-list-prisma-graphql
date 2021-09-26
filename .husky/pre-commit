@@ -41,7 +41,7 @@ case $value in
     SKIP|skip)
       echo "Os testes não foram executados"
     ;;
-    ''|*[!0-9]*) 
+    ''|*[!0-9]*|*[!1-9][!0-9]*) 
       echo "O comando não é valido" 
       exit 1
     ;;
@@ -61,7 +61,7 @@ case $value in
         sleep 1     
       done 
 
-      npx dotenv -e .env.test jest -i -u -t="$option"
+      npx dotenv -e .env.test -- jest -i -u -t="$option"
       
       docker-compose down --volumes
     ;;

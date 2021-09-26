@@ -1,5 +1,6 @@
 ./src/shared/graphql/todo/TodoIntegration.spec.ts:describe("Todo Integration", () => {
 ./src/shared/graphql/tag/TagIntegration.spec.ts:describe('Tag Integration', () => {
+./src/useCases/addTagsInPost/AddTagsInPostUseCase.spec.ts:describe('Add Tags in Todo Use Case', () => {
 ./src/useCases/deleteTodo/DeleteTodoUseCase.spec.ts:describe('Delete Todo Use Case', () => {
 ./src/useCases/listTag/ListTagUseCase.spec.ts:describe('List Tag Use Case', () => {
 ./src/useCases/listTodo/ListTodoUseCase.spec.ts:describe('List Todo Use Case', () => {
