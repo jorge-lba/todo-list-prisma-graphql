@@ -1,9 +1,11 @@
+import { TagTodoRepository } from "repositories/TagTodoRepository";
 import { TodoDTO, TodoRepository, TodoCreateDTO, UpdateTodoDTO } from "../TodoRepository";
+
 
 class TodoRepositoryImpInMemory implements TodoRepository {
   todos: Array<TodoDTO>
   
-  constructor() {
+  constructor(private tagsTodosRepository: TagTodoRepository) {
     this.todos = new Array<TodoDTO>();
   }
 
@@ -72,6 +74,18 @@ class TodoRepositoryImpInMemory implements TodoRepository {
     this.todos.splice(index, 1);
 
     return true;
+  }
+
+  async addTags(todoId: number, tags: Array<number>): Promise<void> {
+    const todoIndex = this.todos.findIndex(todo => todo.id === todoId);
+
+    if(todoIndex < 0){
+      throw new Error('Todo not found');
+    }
+
+    await this.tagsTodosRepository.bulkCreateTagsOnePost(todoId, tags);
+
+    return
   }
 }
 
