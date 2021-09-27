@@ -18,7 +18,7 @@ describe('Add Tags in Todo Use Case', () => {
     tagRepository = new TagRepositoryImpInMemory();
   });
 
-  it('should be add one tag in on todo', async () => {
+  it('should be add one tag in on todo (repositories)', async () => {
     const todo = await todoRepository.create({
       title: 'title',
       description: 'description',
