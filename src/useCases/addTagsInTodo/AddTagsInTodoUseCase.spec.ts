@@ -18,7 +18,7 @@ describe('Add Tags in Todo Use Case', () => {
     tagRepository = new TagRepositoryImpInMemory();
   });
 
-  it('should be add one tag in on todo (repositories)', async () => {
+  it('should be add one tag in one todo (repositories)', async () => {
     const todo = await todoRepository.create({
       title: 'title',
       description: 'description',
@@ -35,5 +35,9 @@ describe('Add Tags in Todo Use Case', () => {
 
     expect(relations.length).toBe(1);
 
+  })
+
+  it('should be add multiple tags in one todo', async() => {
+    
   })
 })
