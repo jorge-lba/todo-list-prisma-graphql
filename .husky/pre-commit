@@ -5,7 +5,7 @@
 grep -r  describe\( ./src/* >> .husky/tests/decribes-lines.txt
 
 : > .husky/tests/decribes.txt
-egrep -o -r  "[\"\'](.*?)[\"\']" .husky/tests/decribes-lines.txt | sed 's/"//g' | sed "s/'//g" >> .husky/tests/decribes.txt
+egrep -o -r  "[\"\'](.*?)[\"\']" .husky/tests/decribes-lines.txt | sed 's/"//g' | sed "s/'//g" | sort >> .husky/tests/decribes.txt
 
 echo "Testes disponives para rodar:"
 echo ""
