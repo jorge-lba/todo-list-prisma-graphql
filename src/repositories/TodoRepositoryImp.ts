@@ -1,9 +1,10 @@
-import { Prisma, PrismaClient, todo } from ".prisma/client";
+import { Prisma, PrismaClient, Tag, Todo } from ".prisma/client";
 import { Database } from "../shared/database/prisma";
+import { TagDTO, TagRepository } from "./TagRepository";
 import { TodoCreateDTO, TodoDTO, TodoRepository, UpdateTodoDTO } from "./TodoRepository";
 
 class TodoRepositoryImp implements TodoRepository {
-  model: Prisma.todoDelegate<todo>;
+  model: Prisma.TodoDelegate<Todo>;
   prisma: PrismaClient
 
   constructor(database: Database){
@@ -36,6 +37,7 @@ class TodoRepositoryImp implements TodoRepository {
         title: true,
         description: true,
         done: true,
+        tags: true,
         createdAt: true,
         updatedAt: true,
       }
@@ -52,6 +54,7 @@ class TodoRepositoryImp implements TodoRepository {
         title: true,
         description: true,
         done: true,
+        tags: true,
         createdAt: true,
         updatedAt: true,
       }
@@ -61,8 +64,8 @@ class TodoRepositoryImp implements TodoRepository {
   };
 
   async toggleDoneById(id: number):Promise<TodoDTO | undefined>{
-    const [ todo ] = await this.prisma.$queryRaw<Array<todo>>`
-      UPDATE todo
+    const [ todo ] = await this.prisma.$queryRaw<Array<Todo>>`
+      UPDATE "public"."Todo"
       SET done = NOT done
       WHERE id = ${id}
       RETURNING *
@@ -88,8 +91,26 @@ class TodoRepositoryImp implements TodoRepository {
     return true;
   };
 
-  async addTags(postId: number, tagIds: number[]): Promise<void>{
-    
+  async addTags(todoId: number, tagIds: number[]): Promise<void>{
+    await this.model.update({
+      where: { id: todoId },
+      data: {
+        tags: {
+          connect: tagIds.map(id => ({ id }))
+        }
+      }
+    });
+  };
+
+  async findAllTags(todoId: number): Promise<Tag[] | []>{
+    const todo = await this.model.findUnique({
+      where: { id: todoId },
+      select: {
+        tags: true,
+      }
+    });
+
+    return todo?.tags || [];
   };
 }
 
