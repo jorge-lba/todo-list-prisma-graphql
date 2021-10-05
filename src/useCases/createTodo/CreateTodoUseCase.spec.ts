@@ -1,21 +1,15 @@
 import { TodoCreateDTO, TodoDTO, TodoRepository } from "../../repositories/TodoRepository"
 import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory"
 import { CreateTodoUseCase } from "./CreateTodoUseCase"
-import { TagTodoRepositoryImpInMemory } from "../../repositories/inMemory/TagTodoRepositoryImpInMemory"
-import { TagTodoRepository } from "../../repositories/TagTodoRepository"
 
 describe('Create Todo Use Case', () => {
-  let tagTodoRepository: TagTodoRepository
   let repository: TodoRepository
   let createUseCase: CreateTodoUseCase
   
   let createTodo: (data: TodoCreateDTO) => Promise<TodoDTO>
 
   beforeAll(() => {
-    tagTodoRepository = new TagTodoRepositoryImpInMemory();
-    repository = new TodoRepositoryImpInMemory(
-      tagTodoRepository
-    );
+    repository = new TodoRepositoryImpInMemory();
     createUseCase = new CreateTodoUseCase(repository)
 
     createTodo = create(createUseCase)

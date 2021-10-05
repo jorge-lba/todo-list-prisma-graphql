@@ -1,21 +1,15 @@
-import { TagTodoRepositoryImpInMemory } from "../../repositories/inMemory/TagTodoRepositoryImpInMemory";
-import { TagTodoRepository } from "../../repositories/TagTodoRepository";
 import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
 import { FindByIdTodoUseCase } from "./FindByIdTodoUseCase";
 
 describe('Find By Id Use Case', () => {
-  let tagTodoRepository: TagTodoRepository
   let repository: TodoRepository;
   let findByIdUseCase: FindByIdTodoUseCase;
 
   let findByIdTodo: (id: number) => Promise<TodoDTO | undefined | null>;
 
   beforeAll(() => {
-    tagTodoRepository = new TagTodoRepositoryImpInMemory();
-    repository = new TodoRepositoryImpInMemory(
-      tagTodoRepository
-    );
+    repository = new TodoRepositoryImpInMemory();
     findByIdUseCase = new FindByIdTodoUseCase(repository);
 
     findByIdTodo = findById(findByIdUseCase);

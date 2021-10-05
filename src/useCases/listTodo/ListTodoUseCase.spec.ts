@@ -1,21 +1,15 @@
-import { TagTodoRepositoryImpInMemory } from "../../repositories/inMemory/TagTodoRepositoryImpInMemory";
-import { TagTodoRepository } from "../../repositories/TagTodoRepository";
 import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
 import { ListTodoUseCase } from "./ListTodoUseCase";
 
 describe('List Todo Use Case', () => {
-  let tagTodoRepository: TagTodoRepository
   let repository: TodoRepository;
   let listUseCase: ListTodoUseCase;
 
   let listTodo: () => Promise<Array<TodoDTO>>;
 
   beforeAll(() => {
-    tagTodoRepository = new TagTodoRepositoryImpInMemory();
-    repository = new TodoRepositoryImpInMemory(
-      tagTodoRepository
-    );
+    repository = new TodoRepositoryImpInMemory();
     listUseCase = new ListTodoUseCase(repository);
 
     listTodo = list(listUseCase)
