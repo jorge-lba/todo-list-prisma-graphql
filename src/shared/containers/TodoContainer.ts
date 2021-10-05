@@ -1,3 +1,5 @@
+import { AddTagsInTodoController } from "../../useCases/addTagsInTodo/AddTagsInTodoController"
+import { AddTagsInTodoUseCase } from "../../useCases/addTagsInTodo/AddTagsInTodoUseCase"
 import { TagRepository } from "../../repositories/TagRepository"
 import { TodoRepository } from "../../repositories/TodoRepository"
 import { CreateTagController } from "../../useCases/createTag/CreateTagController"
@@ -64,6 +66,12 @@ const deleteTodoController = (repository: TodoRepository) => {
 
   return new DeleteTodoController(useCase)
 }
+
+const addTagsInTodoController = (repository: TodoRepository) => {
+  const useCase = new AddTagsInTodoUseCase(repository)
+
+  return new AddTagsInTodoController(useCase)
+}
   
 
 export  { 
@@ -74,5 +82,6 @@ export  {
   findByIdController,
   toggleDoneTodoController, 
   updateTodoController,
-  deleteTodoController 
+  deleteTodoController,
+  addTagsInTodoController
 }
