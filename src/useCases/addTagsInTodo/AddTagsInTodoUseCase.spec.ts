@@ -1,26 +1,20 @@
 import { TagRepositoryImpInMemory } from "../../repositories/inMemory/TagRepositoryImpInMemory";
-import { TagTodoRepositoryImpInMemory } from "../../repositories/inMemory/TagTodoRepositoryImpInMemory";
 import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
 import { TagRepository } from "../../repositories/TagRepository";
-import { TagTodoRepository } from "../../repositories/TagTodoRepository";
 import { TodoRepository } from "../../repositories/TodoRepository";
-import { AddTagsInPostUseCase } from "./AddTagsInTodoUseCase";
+import { AddTagsInTodoUseCase } from "./AddTagsInTodoUseCase";
 
 describe('Add Tags in Todo Use Case', () => {
-  let tagTodoRepository: TagTodoRepository;
   let todoRepository: TodoRepository;
   let tagRepository: TagRepository;
 
-  let addTagsInTodoUseCase: AddTagsInPostUseCase;
+  let addTagsInTodoUseCase: AddTagsInTodoUseCase;
 
   beforeEach(() => {
-    tagTodoRepository = new TagTodoRepositoryImpInMemory();
-    todoRepository = new TodoRepositoryImpInMemory(
-      tagTodoRepository
-    );
     tagRepository = new TagRepositoryImpInMemory();
+    todoRepository = new TodoRepositoryImpInMemory(tagRepository);
 
-    addTagsInTodoUseCase = new AddTagsInPostUseCase(
+    addTagsInTodoUseCase = new AddTagsInTodoUseCase(
       todoRepository
     )
   });
@@ -38,9 +32,9 @@ describe('Add Tags in Todo Use Case', () => {
 
     await todoRepository.addTags(todo.id, [tag.id])
 
-    const relations = await tagTodoRepository.findAllByTodoId(todo.id);
+    const tags = await todoRepository.findAllTags(todo.id);
 
-    expect(relations.length).toBe(1);
+    expect(tags.length).toBe(1);
 
   })
 
@@ -61,14 +55,23 @@ describe('Add Tags in Todo Use Case', () => {
       }
     ]
 
-    const tags = await Promise.all(tagsData
+    const newTags = await Promise.all(tagsData
       .map(async tagData => await tagRepository.create(tagData))
     );
 
-    await addTagsInTodoUseCase.execute(todo.id, tags.map(tag => tag.id));
+    await addTagsInTodoUseCase.execute(todo.id, newTags.map(tag => tag.id));
 
-    const relations = await tagTodoRepository.findAllByTodoId(todo.id);
+    const tags = await todoRepository.findAllTags(todo.id);
 
-    expect(relations.length).toBe(2);
+    const expectedTagsLength = tagsData.length;
+
+    expect(tags.length).toBe(expectedTagsLength);
+    expect(tags.map(tag => ({
+      name: tag.name,
+      description: tag.description,
+    }))).toEqual(tagsData.map(tagData => ({
+      name: tagData.name,
+      description: tagData.description,
+    })));
   })
 })
