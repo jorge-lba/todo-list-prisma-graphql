@@ -1,6 +1,6 @@
 import { TodoRepository } from "repositories/TodoRepository";
 
-class AddTagsInPostUseCase {
+class AddTagsInTodoUseCase {
   constructor(private todoRepository: TodoRepository) {}
 
   async execute(todoId: number, tagIds: Array<number>): Promise<void> {
@@ -14,4 +14,4 @@ class AddTagsInPostUseCase {
   }
 }
 
-export {AddTagsInPostUseCase}
+export {AddTagsInTodoUseCase}
