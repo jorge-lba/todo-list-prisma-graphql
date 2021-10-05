@@ -1,4 +1,5 @@
 import { Field, ObjectType, ID } from "type-graphql";
+import { TagObjectType } from "../tag/TagObjectType";
 
 @ObjectType()
 class TodoObjectType {
@@ -13,6 +14,9 @@ class TodoObjectType {
 
   @Field()
   done: boolean;
+
+  @Field(() => [TagObjectType])
+  tags?: Array<TagObjectType>;
 }
 
 @ObjectType()

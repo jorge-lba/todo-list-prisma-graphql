@@ -12,13 +12,15 @@ import {
   toggleDoneTodoController,
   updateTodoController,
   deleteTodoController,
-  findByIdController
+  findByIdController,
+  addTagsInTodoController
 } from "../../containers/TodoContainer";
 import { UpdateTodoController } from "../../../useCases/updateTodo/UpdateTodoController";
 import { DeleteTodoController } from "../../../useCases/deleteTodo/DeleteTodoController";
 import { TodoRepositoryImp } from "../../../repositories/TodoRepositoryImp";
 import { Database } from "../../database/prisma";
 import { FindByIdTodoController } from "../../../useCases/findByIdTodo/FindByIdTodoController";
+import { AddTagsInTodoController } from "useCases/addTagsInTodo/AddTagsInTodoController";
 
 @InputType()
 class CreateTodoInput {
@@ -36,6 +38,14 @@ class UpdateTodoInput {
   description?: string;
 };
 
+@InputType()
+class AddTagsInTodoInput {
+  @Field()
+  todoId: number;
+  @Field(() => [Number])
+  tagsIds: Array<number>;
+};
+
 @Resolver(TodoObjectType)
 class TodoResolver {
   todoRepository: TodoRepository;
@@ -46,6 +56,7 @@ class TodoResolver {
   toggleDoneTodoController: ToggleDoneTodoController;
   updateTodoController: UpdateTodoController;
   deleteTodoController: DeleteTodoController;
+  addTagsInTodoController: AddTagsInTodoController; 
 
   constructor(){
     //@ts-ignore
@@ -57,6 +68,7 @@ class TodoResolver {
     this.toggleDoneTodoController = toggleDoneTodoController(this.todoRepository);
     this.updateTodoController = updateTodoController(this.todoRepository);
     this.deleteTodoController = deleteTodoController(this.todoRepository);
+    this.addTagsInTodoController = addTagsInTodoController(this.todoRepository);
   }
 
   @Query(() => [TodoObjectType])
@@ -103,6 +115,14 @@ class TodoResolver {
     const status = await this.deleteTodoController.handle(todoId);
 
     return { status }
+  }
+
+  @Mutation(() => Boolean)
+  async addTagsInTodo(@Arg('addTagsInTodoInput') addTagsInTodoInput: AddTagsInTodoInput){
+    const {todoId, tagsIds} = addTagsInTodoInput
+
+    await this.addTagsInTodoController.handle(todoId, tagsIds);
+    return true
   }
 }
 

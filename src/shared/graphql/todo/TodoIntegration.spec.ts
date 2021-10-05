@@ -179,4 +179,99 @@ describe("Todo Integration", () => {
       todos: []
     });
   })
+
+  it('should be add two tags in one post', async() => {
+    const res = await server.executeOperation({
+      query: gql`mutation CreateTodoMutation($createInput: CreateTodoInput!) {
+        createTodo(createTodoInput: $createInput) {
+          id
+          title
+          done
+          description
+        }
+      }`,
+      variables: {
+        createInput: {
+          title: "Test Todo",
+          description: "should be add two tags in one post",
+        },
+      },
+    });
+
+    const todo = res.data?.createTodo;
+
+    const resOne = await server.executeOperation({
+      query: gql`
+        mutation CreateTagMutation($createInput: CreateTagInput!) {
+          createTag(createTagInput: $createInput) {
+            id
+          }
+        }
+      `,
+      variables: {
+        createInput: {
+          name: "Test Tag",
+          description: "Test Tag Description",
+        },
+      },
+    });
+
+    const resTwo = await server.executeOperation({
+      query: gql`
+        mutation CreateTagMutation($createInput: CreateTagInput!) {
+          createTag(createTagInput: $createInput) {
+            id
+          }
+        }
+      `,
+      variables: {
+        createInput: {
+          name: "Test Tag Two",
+          description: "Test Tag Description Two",
+        },
+      },
+    });
+
+    const tagsIds = [
+      Number(resOne?.data?.createTag?.id), 
+      Number(resTwo?.data?.createTag?.id)
+    ];
+    const TAG_LENGTH = tagsIds.length;
+
+    await server.executeOperation({
+      query: gql`
+        mutation AddTagsInTodoMutation(
+          $addTagsInTodoAddTagsInTodoInput: AddTagsInTodoInput!
+          ) {
+          addTagsInTodo(
+            addTagsInTodoInput: $addTagsInTodoAddTagsInTodoInput
+          )
+        }
+      `,
+      variables: {
+        addTagsInTodoAddTagsInTodoInput: {
+          todoId: Number(todo?.id),
+          tagsIds,
+        },
+      },
+    });
+
+    const todoResponse = await server.executeOperation({
+      query: gql`query FindByIdQuery($id: Float!) {
+        findById(todoId: $id) {
+          id
+          tags {
+            id
+            name
+            description
+          }
+        }
+      }`,
+      variables: {
+        id: Number(todo?.id),
+      }
+    });
+
+    expect(todoResponse.data?.findById.tags).toHaveLength(TAG_LENGTH);
+  })
 });

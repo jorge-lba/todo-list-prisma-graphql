@@ -5,7 +5,7 @@
 grep -r  describe\( ./src/* >> .husky/tests/decribes-lines.txt
 
 : > .husky/tests/decribes.txt
-egrep -o -r  "[\"\'](.*?)[\"\']" .husky/tests/decribes-lines.txt | sed 's/"//g' | sed "s/'//g" >> .husky/tests/decribes.txt
+egrep -o -r  "[\"\'](.*?)[\"\']" .husky/tests/decribes-lines.txt | sed 's/"//g' | sed "s/'//g" | sort >> .husky/tests/decribes.txt
 
 echo "Testes disponives para rodar:"
 echo ""
@@ -41,7 +41,7 @@ case $value in
     SKIP|skip)
       echo "Os testes não foram executados"
     ;;
-    ''|*[!0-9]*) 
+    ''|*[!0-9]*|*[!1-9][!0-9]*) 
       echo "O comando não é valido" 
       exit 1
     ;;
@@ -61,7 +61,7 @@ case $value in
         sleep 1     
       done 
 
-      npx dotenv -e .env.test jest -i -u -t="$option"
+      npx dotenv -e .env.test -- jest -i -u -t="$option"
       
       docker-compose down --volumes
     ;;

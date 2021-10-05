@@ -9,7 +9,7 @@ describe('Create Todo Use Case', () => {
   let createTodo: (data: TodoCreateDTO) => Promise<TodoDTO>
 
   beforeAll(() => {
-    repository = new TodoRepositoryImpInMemory()
+    repository = new TodoRepositoryImpInMemory();
     createUseCase = new CreateTodoUseCase(repository)
 
     createTodo = create(createUseCase)

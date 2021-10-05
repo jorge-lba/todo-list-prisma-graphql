@@ -6,5 +6,6 @@
 ./src/useCases/findByIdTodo/FindByIdTodoUseCase.spec.ts:describe('Find By Id Use Case', () => {
 ./src/useCases/updateTodo/UpdateTodoUseCase.spec.ts:describe('Update Todo Use Case', () => {
 ./src/useCases/createTodo/CreateTodoUseCase.spec.ts:describe('Create Todo Use Case', () => {
+./src/useCases/addTagsInTodo/AddTagsInTodoUseCase.spec.ts:describe('Add Tags in Todo Use Case', () => {
 ./src/useCases/createTag/CreateTagUseCase.spec.ts:describe('Create Tag Use Case', () => {
 ./src/useCases/toggleDoneTodo/ToggleDoneTodoUseCase.spec.ts:describe('Toggle Done Todo Use Case', () => {

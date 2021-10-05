@@ -1,9 +1,19 @@
+import { TagDTO, TagRepository } from "repositories/TagRepository";
 import { TodoDTO, TodoRepository, TodoCreateDTO, UpdateTodoDTO } from "../TodoRepository";
+
+interface RelationTodoTagDTO {
+  todoId: number;
+  tagId: number;
+}
 
 class TodoRepositoryImpInMemory implements TodoRepository {
   todos: Array<TodoDTO>
+  todoToTag: Array<RelationTodoTagDTO> = [];
+  tagRepository: TagRepository | undefined;
   
-  constructor() {
+  constructor(tagRepository?: TagRepository) {
+    this.tagRepository = tagRepository;
+
     this.todos = new Array<TodoDTO>();
   }
 
@@ -73,6 +83,37 @@ class TodoRepositoryImpInMemory implements TodoRepository {
 
     return true;
   }
+
+  async addTags(todoId: number, tags: Array<number>): Promise<void> {
+    const todoIndex = this.todos.findIndex(todo => todo.id === todoId);
+
+    if(todoIndex < 0){
+      throw new Error('Todo not found');
+    }
+
+    tags.forEach(tagId => {
+      this.todoToTag.push({
+        todoId,
+        tagId
+      })
+    })
+
+    return
+  }
+
+  async findAllTags(todoId: number): Promise<TagDTO[] | []>{
+    const todoIndex = this.todos.findIndex(todo => todo.id === todoId);
+
+    if(todoIndex < 0){
+      throw new Error('Todo not found');
+    }
+
+    const tagsIds = this.todoToTag.filter(relation => relation.todoId === todoId).map(relation => relation.tagId);
+
+    const tags = await this.tagRepository?.findAllByIds(tagsIds);
+
+    return tags || []
+  };
 }
 
 export { TodoRepositoryImpInMemory };
