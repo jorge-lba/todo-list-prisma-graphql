@@ -1,6 +1,6 @@
-import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
-import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
-import { ToggleDoneTodoUseCase } from "./toggleDoneTodoUseCase";
+import { TodoRepositoryImpInMemory } from '../../repositories/inMemory/TodoRepositoryImpInMemory';
+import { TodoDTO, TodoRepository } from '../../repositories/TodoRepository';
+import { ToggleDoneTodoUseCase } from './toggleDoneTodoUseCase';
 
 describe('Toggle Done Todo Use Case', () => {
   let repository: TodoRepository;
@@ -23,10 +23,11 @@ describe('Toggle Done Todo Use Case', () => {
 
     const todo = await toggleDoneTodo(id);
 
-    expect(todo!.done).toBeTruthy();
-    expect(todo!.done).toBe(true);
+    expect(todo?.done).toBeTruthy();
+    expect(todo?.done).toBe(true);
   });
 
-  const toggleDone = (toggleDoneUseCase: ToggleDoneTodoUseCase) => 
-    async (todoId: number) => await toggleDoneUseCase.execute(todoId);
+  const toggleDone =
+    (toggleDoneUseCase: ToggleDoneTodoUseCase) => async (todoId: number) =>
+      await toggleDoneUseCase.execute(todoId);
 });

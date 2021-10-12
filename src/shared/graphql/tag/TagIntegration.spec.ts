@@ -1,10 +1,12 @@
-import { ApolloServer, gql } from "apollo-server-express";
-import { app } from "../app";
+import { ApolloServer, gql } from 'apollo-server-express';
+
+import { app } from '../app';
 
 describe('Tag Integration', () => {
-  let server: ApolloServer
+  let server: ApolloServer;
 
   beforeAll(async () => {
+    // @ts-ignore
     server = await app();
   });
 
@@ -38,26 +40,29 @@ describe('Tag Integration', () => {
     });
   });
 
-
-  it('should be list all tags', async() => {
+  it('should be list all tags', async () => {
     const res = await server.executeOperation({
-      query: gql`query TodosQuery {
-        tags {
-          id
-          name
-          description
+      query: gql`
+        query TodosQuery {
+          tags {
+            id
+            name
+            description
+          }
         }
-      }`,
+      `,
     });
 
     const todos = res.data;
 
     expect(todos).toEqual({
-      tags: [{
+      tags: [
+        {
           id: '1',
           name: 'Prisma',
           description: 'Prisma is a GraphQL client for your existing database.',
-        }]
+        },
+      ],
     });
-  })
+  });
 });

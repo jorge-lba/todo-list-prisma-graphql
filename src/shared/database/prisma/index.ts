@@ -1,29 +1,29 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
 class Database {
-  private static _instance: Database
+  private static _instance: Database;
 
-  private _prisma: PrismaClient
+  private _prisma: PrismaClient;
 
   private constructor() {
-    this._prisma = new PrismaClient()
+    this._prisma = new PrismaClient();
   }
 
-  static get instance() {
+  static get instance(): Database {
     if (!Database._instance) {
-      Database._instance = new Database()
+      Database._instance = new Database();
     }
 
-    return Database._instance
+    return Database._instance;
   }
 
-  get prisma() {
-    return this._prisma
+  get prisma(): PrismaClient {
+    return this._prisma;
   }
 
-  disconnect() {
-    this._prisma.$disconnect()
+  disconnect(): void {
+    this._prisma.$disconnect();
   }
 }
 
-export { Database }
+export { Database };

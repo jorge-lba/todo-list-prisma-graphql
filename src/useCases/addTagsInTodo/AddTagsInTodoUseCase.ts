@@ -1,4 +1,4 @@
-import { TodoRepository } from "repositories/TodoRepository";
+import { TodoRepository } from 'repositories/TodoRepository';
 
 class AddTagsInTodoUseCase {
   constructor(private todoRepository: TodoRepository) {}
@@ -7,11 +7,11 @@ class AddTagsInTodoUseCase {
     const todo = await this.todoRepository.findById(todoId);
 
     if (!todo) {
-      throw new Error("Todo not found");
+      throw new Error('Todo not found');
     }
 
     await this.todoRepository.addTags(todoId, tagIds);
   }
 }
 
-export {AddTagsInTodoUseCase}
+export { AddTagsInTodoUseCase };

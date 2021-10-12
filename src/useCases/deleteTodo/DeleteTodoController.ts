@@ -1,11 +1,10 @@
-import { DeleteTodoUseCase } from "./DeleteTodoUseCase";
-
+import { DeleteTodoUseCase } from './DeleteTodoUseCase';
 
 class DeleteTodoController {
-  constructor( private readonly deleteTodoUseCase: DeleteTodoUseCase ) {}
+  constructor(private readonly deleteTodoUseCase: DeleteTodoUseCase) {}
 
-  async handle( todoId: number ): Promise<boolean> {
-    await this.deleteTodoUseCase.execute( todoId );
+  async handle(todoId: number): Promise<boolean> {
+    await this.deleteTodoUseCase.execute(todoId);
 
     return true;
   }

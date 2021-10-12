@@ -1,25 +1,24 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 
-import { buildSchema } from 'type-graphql'
-import { ApolloServer } from 'apollo-server'
-import { TodoResolver } from './todo/TodoResolver'
-import { TagResolver } from './tag/TagResolver'
+import { ApolloServer } from 'apollo-server';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { buildSchema } from 'type-graphql';
+
+import { TagResolver } from './tag/TagResolver';
+import { TodoResolver } from './todo/TodoResolver';
 
 const app = async (): Promise<ApolloServer> => {
   const schema = await buildSchema({
-    resolvers: [TodoResolver, TagResolver]
-  })
+    resolvers: [TodoResolver, TagResolver],
+  });
 
-  const apolloServer = new ApolloServer({ 
+  const apolloServer = new ApolloServer({
     schema,
-    plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground()
-    ],
-    introspection: true
-  })
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    introspection: true,
+  });
 
-  return apolloServer  
-}
+  return apolloServer;
+};
 
 export { app };

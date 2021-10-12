@@ -1,6 +1,6 @@
-import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
-import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
-import { ListTodoUseCase } from "./ListTodoUseCase";
+import { TodoRepositoryImpInMemory } from '../../repositories/inMemory/TodoRepositoryImpInMemory';
+import { TodoDTO, TodoRepository } from '../../repositories/TodoRepository';
+import { ListTodoUseCase } from './ListTodoUseCase';
 
 describe('List Todo Use Case', () => {
   let repository: TodoRepository;
@@ -12,10 +12,10 @@ describe('List Todo Use Case', () => {
     repository = new TodoRepositoryImpInMemory();
     listUseCase = new ListTodoUseCase(repository);
 
-    listTodo = list(listUseCase)
+    listTodo = list(listUseCase);
   });
 
-  it('should be list all todo', async() => {
+  it('should be list all todo', async () => {
     await repository.create({
       title: 'Todo 1',
       description: 'Todo 1 description',
@@ -31,6 +31,7 @@ describe('List Todo Use Case', () => {
     expect(todo.length).toBe(2);
   });
 
-  const list = (listUseCase: ListTodoUseCase) => 
-    async ():Promise<Array<TodoDTO>> => await listUseCase.execute();
-})
+  const list =
+    (listUseCase: ListTodoUseCase) => async (): Promise<Array<TodoDTO>> =>
+      await listUseCase.execute();
+});

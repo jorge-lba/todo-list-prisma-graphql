@@ -1,6 +1,6 @@
-import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
-import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
-import { FindByIdTodoUseCase } from "./FindByIdTodoUseCase";
+import { TodoRepositoryImpInMemory } from '../../repositories/inMemory/TodoRepositoryImpInMemory';
+import { TodoDTO, TodoRepository } from '../../repositories/TodoRepository';
+import { FindByIdTodoUseCase } from './FindByIdTodoUseCase';
 
 describe('Find By Id Use Case', () => {
   let repository: TodoRepository;
@@ -18,7 +18,7 @@ describe('Find By Id Use Case', () => {
   it('should be return one todo', async () => {
     const { id } = await repository.create({
       title: 'Learn TypeScript',
-      description: 'Learn TypeScript with Node.js'
+      description: 'Learn TypeScript with Node.js',
     });
 
     const todo = await findByIdTodo(id);
@@ -27,11 +27,13 @@ describe('Find By Id Use Case', () => {
     const expectedDescription = 'Learn TypeScript with Node.js';
 
     expect(todo).toBeDefined();
-    expect(todo!.id).toBe(id);
-    expect(todo!.title).toBe(expectedTitle);
-    expect(todo!.description).toBe(expectedDescription);
-  })
+    expect(todo?.id).toBe(id);
+    expect(todo?.title).toBe(expectedTitle);
+    expect(todo?.description).toBe(expectedDescription);
+  });
 
-  const findById = (findByIdUseCase: FindByIdTodoUseCase) =>
-    async (id: number): Promise<TodoDTO | undefined | null> => await findByIdUseCase.execute(id);
-})
+  const findById =
+    (findByIdUseCase: FindByIdTodoUseCase) =>
+    async (id: number): Promise<TodoDTO | undefined | null> =>
+      await findByIdUseCase.execute(id);
+});

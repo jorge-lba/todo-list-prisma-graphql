@@ -1,5 +1,5 @@
-import { TodoDTO } from "../../repositories/TodoRepository";
-import { UpdateTodoUseCase } from "./UpdateTodoUseCase";
+import { TodoDTO } from '../../repositories/TodoRepository';
+import { UpdateTodoUseCase } from './UpdateTodoUseCase';
 
 interface ReceivedData {
   id: number;
@@ -8,14 +8,17 @@ interface ReceivedData {
 }
 
 class UpdateTodoController {
-  constructor( private readonly updateTodoUseCase: UpdateTodoUseCase ) {}
+  constructor(private readonly updateTodoUseCase: UpdateTodoUseCase) {}
 
-  async handle( data: ReceivedData ): Promise<TodoDTO | undefined> {
+  async handle(data: ReceivedData): Promise<TodoDTO | undefined> {
     const { id, title, description } = data;
 
-    const todo = await this.updateTodoUseCase.execute( id, { title, description } );
+    const todo = await this.updateTodoUseCase.execute(id, {
+      title,
+      description,
+    });
 
-    return todo
+    return todo;
   }
 }
 

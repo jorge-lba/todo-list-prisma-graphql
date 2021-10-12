@@ -1,6 +1,6 @@
-import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
-import { TodoRepository } from "../../repositories/TodoRepository";
-import { DeleteTodoUseCase } from "./DeleteTodoUseCase";
+import { TodoRepositoryImpInMemory } from '../../repositories/inMemory/TodoRepositoryImpInMemory';
+import { TodoRepository } from '../../repositories/TodoRepository';
+import { DeleteTodoUseCase } from './DeleteTodoUseCase';
 
 describe('Delete Todo Use Case', () => {
   let repository: TodoRepository;
@@ -16,7 +16,7 @@ describe('Delete Todo Use Case', () => {
   });
 
   it('should be delete one todo', async () => {
-    const  { id } = await repository.create({
+    const { id } = await repository.create({
       title: 'todo 1',
       description: 'description 1',
     });
@@ -28,6 +28,7 @@ describe('Delete Todo Use Case', () => {
     expect(todoList.length).toBe(0);
   });
 
-  const deleteOne = (deleteUseCase: DeleteTodoUseCase) => 
-    async (todoId: number) => await deleteUseCase.execute(todoId);
+  const deleteOne =
+    (deleteUseCase: DeleteTodoUseCase) => async (todoId: number) =>
+      await deleteUseCase.execute(todoId);
 });

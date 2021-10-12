@@ -1,87 +1,100 @@
-import { AddTagsInTodoController } from "../../useCases/addTagsInTodo/AddTagsInTodoController"
-import { AddTagsInTodoUseCase } from "../../useCases/addTagsInTodo/AddTagsInTodoUseCase"
-import { TagRepository } from "../../repositories/TagRepository"
-import { TodoRepository } from "../../repositories/TodoRepository"
-import { CreateTagController } from "../../useCases/createTag/CreateTagController"
-import { CreateTagUseCase } from "../../useCases/createTag/CreateTagUseCase"
-import { CreateTodoController } from "../../useCases/createTodo/CreateTodoController"
-import { CreateTodoUseCase } from "../../useCases/createTodo/CreateTodoUseCase"
-import { DeleteTodoController } from "../../useCases/deleteTodo/DeleteTodoController"
-import { DeleteTodoUseCase } from "../../useCases/deleteTodo/DeleteTodoUseCase"
-import { FindByIdTodoController } from "../../useCases/findByIdTodo/FindByIdTodoController"
-import { FindByIdTodoUseCase } from "../../useCases/findByIdTodo/FindByIdTodoUseCase"
-import { ListTagController } from "../../useCases/listTag/ListTagController"
-import { ListTagUseCase } from "../../useCases/listTag/ListTagUseCase"
-import { ListTodoController } from "../../useCases/listTodo/ListTodoController"
-import { ListTodoUseCase } from "../../useCases/listTodo/ListTodoUseCase"
-import { ToggleDoneTodoController } from "../../useCases/toggleDoneTodo/toggleDoneTodoController"
-import { ToggleDoneTodoUseCase } from "../../useCases/toggleDoneTodo/toggleDoneTodoUseCase"
-import { UpdateTodoController } from "../../useCases/updateTodo/UpdateTodoController"
-import { UpdateTodoUseCase } from "../../useCases/updateTodo/UpdateTodoUseCase"
+import { TagRepository } from '../../repositories/TagRepository';
+import { TodoRepository } from '../../repositories/TodoRepository';
+import { AddTagsInTodoController } from '../../useCases/addTagsInTodo/AddTagsInTodoController';
+import { AddTagsInTodoUseCase } from '../../useCases/addTagsInTodo/AddTagsInTodoUseCase';
+import { CreateTagController } from '../../useCases/createTag/CreateTagController';
+import { CreateTagUseCase } from '../../useCases/createTag/CreateTagUseCase';
+import { CreateTodoController } from '../../useCases/createTodo/CreateTodoController';
+import { CreateTodoUseCase } from '../../useCases/createTodo/CreateTodoUseCase';
+import { DeleteTodoController } from '../../useCases/deleteTodo/DeleteTodoController';
+import { DeleteTodoUseCase } from '../../useCases/deleteTodo/DeleteTodoUseCase';
+import { FindByIdTodoController } from '../../useCases/findByIdTodo/FindByIdTodoController';
+import { FindByIdTodoUseCase } from '../../useCases/findByIdTodo/FindByIdTodoUseCase';
+import { ListTagController } from '../../useCases/listTag/ListTagController';
+import { ListTagUseCase } from '../../useCases/listTag/ListTagUseCase';
+import { ListTodoController } from '../../useCases/listTodo/ListTodoController';
+import { ListTodoUseCase } from '../../useCases/listTodo/ListTodoUseCase';
+import { ToggleDoneTodoController } from '../../useCases/toggleDoneTodo/toggleDoneTodoController';
+import { ToggleDoneTodoUseCase } from '../../useCases/toggleDoneTodo/toggleDoneTodoUseCase';
+import { UpdateTodoController } from '../../useCases/updateTodo/UpdateTodoController';
+import { UpdateTodoUseCase } from '../../useCases/updateTodo/UpdateTodoUseCase';
 
-const createTodoController = (repository: TodoRepository) => {
-  const useCase = new CreateTodoUseCase(repository)
+const createTodoController = (
+  repository: TodoRepository,
+): CreateTodoController => {
+  const useCase = new CreateTodoUseCase(repository);
 
-  return new CreateTodoController(useCase)
-}
+  return new CreateTodoController(useCase);
+};
 
-const createTagController = (repository: TagRepository) => {
-  const useCase = new CreateTagUseCase(repository)
+const createTagController = (
+  repository: TagRepository,
+): CreateTagController => {
+  const useCase = new CreateTagUseCase(repository);
 
-  return new CreateTagController(useCase)
-}
+  return new CreateTagController(useCase);
+};
 
-const listTodoController = (repository: TodoRepository) => {
-  const useCase = new ListTodoUseCase(repository)
+const listTodoController = (repository: TodoRepository): ListTodoController => {
+  const useCase = new ListTodoUseCase(repository);
 
-  return new ListTodoController(useCase)
-}  
+  return new ListTodoController(useCase);
+};
 
-const listTagController = (repository: TagRepository) => {
-  const useCase = new ListTagUseCase(repository)
+const listTagController = (repository: TagRepository): ListTagController => {
+  const useCase = new ListTagUseCase(repository);
 
-  return new ListTagController(useCase)
-} 
+  return new ListTagController(useCase);
+};
 
-const findByIdController = (repository: TodoRepository) => {
-  const useCase = new FindByIdTodoUseCase(repository)
+const findByIdController = (
+  repository: TodoRepository,
+): FindByIdTodoController => {
+  const useCase = new FindByIdTodoUseCase(repository);
 
-  return new FindByIdTodoController(useCase)
-}
+  return new FindByIdTodoController(useCase);
+};
 
-const toggleDoneTodoController = (repository: TodoRepository) => {
-  const useCase = new ToggleDoneTodoUseCase(repository)
+const toggleDoneTodoController = (
+  repository: TodoRepository,
+): ToggleDoneTodoController => {
+  const useCase = new ToggleDoneTodoUseCase(repository);
 
-  return new ToggleDoneTodoController(useCase)
-}
+  return new ToggleDoneTodoController(useCase);
+};
 
-const updateTodoController = (repository: TodoRepository) => {
-  const useCase = new UpdateTodoUseCase(repository)
+const updateTodoController = (
+  repository: TodoRepository,
+): UpdateTodoController => {
+  const useCase = new UpdateTodoUseCase(repository);
 
-  return new UpdateTodoController(useCase)
-}
+  return new UpdateTodoController(useCase);
+};
 
-const deleteTodoController = (repository: TodoRepository) => {
-  const useCase = new DeleteTodoUseCase(repository)
+const deleteTodoController = (
+  repository: TodoRepository,
+): DeleteTodoController => {
+  const useCase = new DeleteTodoUseCase(repository);
 
-  return new DeleteTodoController(useCase)
-}
+  return new DeleteTodoController(useCase);
+};
 
-const addTagsInTodoController = (repository: TodoRepository) => {
-  const useCase = new AddTagsInTodoUseCase(repository)
+const addTagsInTodoController = (
+  repository: TodoRepository,
+): AddTagsInTodoController => {
+  const useCase = new AddTagsInTodoUseCase(repository);
 
-  return new AddTagsInTodoController(useCase)
-}
-  
+  return new AddTagsInTodoController(useCase);
+};
 
-export  { 
-  createTodoController, 
+export {
+  createTodoController,
   createTagController,
-  listTodoController, 
+  listTodoController,
   listTagController,
   findByIdController,
-  toggleDoneTodoController, 
+  toggleDoneTodoController,
   updateTodoController,
   deleteTodoController,
-  addTagsInTodoController
-}
+  addTagsInTodoController,
+};

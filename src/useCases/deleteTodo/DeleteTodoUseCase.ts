@@ -1,4 +1,4 @@
-import { TodoRepository } from "../../repositories/TodoRepository";
+import { TodoRepository } from '../../repositories/TodoRepository';
 
 class DeleteTodoUseCase {
   constructor(private readonly todoRepository: TodoRepository) {}
