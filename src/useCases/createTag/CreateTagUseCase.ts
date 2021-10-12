@@ -1,4 +1,8 @@
-import { CreateTagDTO, TagDTO, TagRepository } from "../../repositories/TagRepository";
+import {
+  CreateTagDTO,
+  TagDTO,
+  TagRepository,
+} from '../../repositories/TagRepository';
 
 class CreateTagUseCase {
   constructor(private tagRepository: TagRepository) {}
@@ -8,6 +12,6 @@ class CreateTagUseCase {
 
     return tag;
   }
-};
+}
 
 export { CreateTagUseCase };

@@ -1,4 +1,4 @@
-import { TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
+import { TodoDTO, TodoRepository } from '../../repositories/TodoRepository';
 
 class ToggleDoneTodoUseCase {
   constructor(private todoRepository: TodoRepository) {}

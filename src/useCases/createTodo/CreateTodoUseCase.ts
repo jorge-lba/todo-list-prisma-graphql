@@ -1,4 +1,8 @@
-import { TodoCreateDTO, TodoDTO, TodoRepository } from "../../repositories/TodoRepository";
+import {
+  TodoCreateDTO,
+  TodoDTO,
+  TodoRepository,
+} from '../../repositories/TodoRepository';
 
 class CreateTodoUseCase {
   constructor(private repository: TodoRepository) {}

@@ -1,5 +1,6 @@
-import { Field, ObjectType, ID } from "type-graphql";
-import { TagObjectType } from "../tag/TagObjectType";
+import { Field, ObjectType, ID } from 'type-graphql';
+
+import { TagObjectType } from '../tag/TagObjectType';
 
 @ObjectType()
 class TodoObjectType {

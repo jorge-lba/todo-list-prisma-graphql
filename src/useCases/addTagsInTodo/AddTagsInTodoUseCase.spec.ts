@@ -1,8 +1,8 @@
-import { TagRepositoryImpInMemory } from "../../repositories/inMemory/TagRepositoryImpInMemory";
-import { TodoRepositoryImpInMemory } from "../../repositories/inMemory/TodoRepositoryImpInMemory";
-import { TagRepository } from "../../repositories/TagRepository";
-import { TodoRepository } from "../../repositories/TodoRepository";
-import { AddTagsInTodoUseCase } from "./AddTagsInTodoUseCase";
+import { TagRepositoryImpInMemory } from '../../repositories/inMemory/TagRepositoryImpInMemory';
+import { TodoRepositoryImpInMemory } from '../../repositories/inMemory/TodoRepositoryImpInMemory';
+import { TagRepository } from '../../repositories/TagRepository';
+import { TodoRepository } from '../../repositories/TodoRepository';
+import { AddTagsInTodoUseCase } from './AddTagsInTodoUseCase';
 
 describe('Add Tags in Todo Use Case', () => {
   let todoRepository: TodoRepository;
@@ -14,9 +14,7 @@ describe('Add Tags in Todo Use Case', () => {
     tagRepository = new TagRepositoryImpInMemory();
     todoRepository = new TodoRepositoryImpInMemory(tagRepository);
 
-    addTagsInTodoUseCase = new AddTagsInTodoUseCase(
-      todoRepository
-    )
+    addTagsInTodoUseCase = new AddTagsInTodoUseCase(todoRepository);
   });
 
   it('should be add one tag in one todo (repositories)', async () => {
@@ -30,15 +28,14 @@ describe('Add Tags in Todo Use Case', () => {
       description: 'description',
     });
 
-    await todoRepository.addTags(todo.id, [tag.id])
+    await todoRepository.addTags(todo.id, [tag.id]);
 
     const tags = await todoRepository.findAllTags(todo.id);
 
     expect(tags.length).toBe(1);
+  });
 
-  })
-
-  it('should be add multiple tags in one todo', async() => {
+  it('should be add multiple tags in one todo', async () => {
     const todo = await todoRepository.create({
       title: 'New Todo',
       description: 'Test a new todo',
@@ -52,26 +49,33 @@ describe('Add Tags in Todo Use Case', () => {
       {
         name: 'tag2',
         description: 'test tag 2',
-      }
-    ]
+      },
+    ];
 
-    const newTags = await Promise.all(tagsData
-      .map(async tagData => await tagRepository.create(tagData))
+    const newTags = await Promise.all(
+      tagsData.map(async (tagData) => await tagRepository.create(tagData)),
     );
 
-    await addTagsInTodoUseCase.execute(todo.id, newTags.map(tag => tag.id));
+    await addTagsInTodoUseCase.execute(
+      todo.id,
+      newTags.map((tag) => tag.id),
+    );
 
     const tags = await todoRepository.findAllTags(todo.id);
 
     const expectedTagsLength = tagsData.length;
 
     expect(tags.length).toBe(expectedTagsLength);
-    expect(tags.map(tag => ({
-      name: tag.name,
-      description: tag.description,
-    }))).toEqual(tagsData.map(tagData => ({
-      name: tagData.name,
-      description: tagData.description,
-    })));
-  })
-})
+    expect(
+      tags.map((tag) => ({
+        name: tag.name,
+        description: tag.description,
+      })),
+    ).toEqual(
+      tagsData.map((tagData) => ({
+        name: tagData.name,
+        description: tagData.description,
+      })),
+    );
+  });
+});

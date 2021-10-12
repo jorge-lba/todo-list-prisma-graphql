@@ -1,4 +1,4 @@
-import { TagDTO, TagRepository } from "./TagRepository";
+import { TagDTO, TagRepository } from './TagRepository';
 
 interface TodoDTO {
   id: number;
@@ -23,11 +23,14 @@ interface UpdateTodoDTO {
 
 interface TodoRepository {
   tagRepository?: TagRepository;
-  create: ({ title, description }:TodoCreateDTO) => Promise<TodoDTO>;
+  create: ({ title, description }: TodoCreateDTO) => Promise<TodoDTO>;
   findAll: () => Promise<TodoDTO[]>;
-  findById: (id:number) => Promise<TodoDTO | undefined | null>;
+  findById: (id: number) => Promise<TodoDTO | undefined | null>;
   toggleDoneById: (id: number) => Promise<TodoDTO | undefined>;
-  update: (id: number, { title, description }: UpdateTodoDTO) => Promise<TodoDTO | undefined>;
+  update: (
+    id: number,
+    { title, description }: UpdateTodoDTO,
+  ) => Promise<TodoDTO | undefined>;
   delete: (id: number) => Promise<boolean>;
   addTags: (todoId: number, tagIds: number[]) => Promise<void>;
   findAllTags: (todoId: number) => Promise<TagDTO[]>;

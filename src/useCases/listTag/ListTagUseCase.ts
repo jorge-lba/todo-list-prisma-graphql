@@ -1,11 +1,11 @@
-import { TagDTO, TagRepository } from "../../repositories/TagRepository"
+import { TagDTO, TagRepository } from '../../repositories/TagRepository';
 
 class ListTagUseCase {
   constructor(private tagRepository: TagRepository) {}
 
   async execute(): Promise<Array<TagDTO>> {
-    return await this.tagRepository.findAll()
+    return this.tagRepository.findAll();
   }
 }
 
-export { ListTagUseCase }
+export { ListTagUseCase };
