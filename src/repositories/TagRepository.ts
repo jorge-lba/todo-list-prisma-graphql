@@ -16,6 +16,10 @@ interface TagRepository {
   findAll: () => Promise<TagDTO[]>;
   findOneById: (tagId: number) => Promise<TagDTO>;
   findAllByIds: (tagIds: number[]) => Promise<TagDTO[]>;
+  updatedById: (
+    tagId: number,
+    updateData: Partial<CreateTagDTO>,
+  ) => Promise<TagDTO>;
 }
 
 export { TagDTO, TagRepository, CreateTagDTO };

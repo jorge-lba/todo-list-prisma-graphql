@@ -47,6 +47,29 @@ class TagRepositoryImpInMemory implements TagRepository {
 
     return tags;
   }
+
+  async updatedById(
+    tagId: number,
+    updateData: Partial<CreateTagDTO>,
+  ): Promise<TagDTO> {
+    const tag = await this.findOneById(tagId);
+
+    if (!tag) {
+      throw new Error('Tag not found');
+    }
+
+    const updatedTag = {
+      ...tag,
+      ...updateData,
+      updatedAt: new Date(),
+    };
+
+    this.tags = this.tags.map((tag) =>
+      tag.id === updatedTag.id ? updatedTag : tag,
+    );
+
+    return updatedTag;
+  }
 }
 
 export { TagRepositoryImpInMemory };
