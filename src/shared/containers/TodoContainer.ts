@@ -16,6 +16,8 @@ import { ListTodoController } from '../../useCases/listTodo/ListTodoController';
 import { ListTodoUseCase } from '../../useCases/listTodo/ListTodoUseCase';
 import { ToggleDoneTodoController } from '../../useCases/toggleDoneTodo/toggleDoneTodoController';
 import { ToggleDoneTodoUseCase } from '../../useCases/toggleDoneTodo/toggleDoneTodoUseCase';
+import { UpdateTagController } from '../../useCases/updateTag/UpdateTagController';
+import { UpdateTagUseCase } from '../../useCases/updateTag/UpdateTagUseCase';
 import { UpdateTodoController } from '../../useCases/updateTodo/UpdateTodoController';
 import { UpdateTodoUseCase } from '../../useCases/updateTodo/UpdateTodoUseCase';
 
@@ -71,6 +73,14 @@ const updateTodoController = (
   return new UpdateTodoController(useCase);
 };
 
+const updateTagController = (
+  repository: TagRepository,
+): UpdateTagController => {
+  const useCase = new UpdateTagUseCase(repository);
+
+  return new UpdateTagController(useCase);
+};
+
 const deleteTodoController = (
   repository: TodoRepository,
 ): DeleteTodoController => {
@@ -97,4 +107,5 @@ export {
   updateTodoController,
   deleteTodoController,
   addTagsInTodoController,
+  updateTagController,
 };
