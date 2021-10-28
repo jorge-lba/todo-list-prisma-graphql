@@ -65,4 +65,41 @@ describe('Tag Integration', () => {
       ],
     });
   });
+
+  it('should be update name and description for an tag', async () => {
+    const res = await server.executeOperation({
+      query: gql`
+        mutation UpdateTagMutation(
+          $updateTagUpdateTagInput: UpdateTagInput!
+          $updateTagTagId: Float!
+        ) {
+          updateTag(
+            updateTagInput: $updateTagUpdateTagInput
+            tagId: $updateTagTagId
+          ) {
+            id
+            name
+            description
+          }
+        }
+      `,
+      variables: {
+        updateTagTagId: 1,
+        updateTagUpdateTagInput: {
+          name: 'Test Tag Updated',
+          description: 'Test Tag Description Updated',
+        },
+      },
+    });
+
+    const tag = res.data;
+
+    expect(tag).toEqual({
+      updateTag: {
+        id: '1',
+        name: 'Test Tag Updated',
+        description: 'Test Tag Description Updated',
+      },
+    });
+  });
 });

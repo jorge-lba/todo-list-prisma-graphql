@@ -39,6 +39,18 @@ class TagRepositoryImp implements TagRepository {
     return tags;
   }
 
+  async updatedById(
+    tagId: number,
+    { name, description }: Partial<CreateTagDTO>,
+  ): Promise<TagDTO> {
+    const tag = await this.model.update({
+      where: { id: tagId },
+      data: { name, description },
+    });
+
+    return tag;
+  }
+
   findOneById: (tagId: number) => Promise<TagDTO>;
   findAllByIds: (tagIds: number[]) => Promise<TagDTO[]>;
 }
