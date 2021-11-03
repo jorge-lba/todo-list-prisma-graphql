@@ -56,13 +56,13 @@ describe('Tag Integration', () => {
     const todos = res.data;
 
     expect(todos).toEqual({
-      tags: [
+      tags: expect.arrayContaining([
         {
           id: '1',
-          name: 'Prisma',
-          description: 'Prisma is a GraphQL client for your existing database.',
+          name: expect.any(String),
+          description: expect.any(String),
         },
-      ],
+      ]),
     });
   });
 
@@ -137,8 +137,10 @@ describe('Tag Integration', () => {
       },
     });
 
-    expect(tags).toEqual({
-      tags: [],
-    });
+    const tagIsValid = tags?.tags.findIndex(
+      (tag: { id: number }) => tag.id === 1,
+    );
+
+    expect(tagIsValid === -1).toBe(true);
   });
 });
