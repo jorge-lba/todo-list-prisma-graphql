@@ -51,6 +51,7 @@ class TagRepositoryImp implements TagRepository {
     return tag;
   }
 
+  deleteById: (tagId: number) => Promise<void>;
   findOneById: (tagId: number) => Promise<TagDTO>;
   findAllByIds: (tagIds: number[]) => Promise<TagDTO[]>;
 }
