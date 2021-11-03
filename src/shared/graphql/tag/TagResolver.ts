@@ -1,4 +1,5 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql';
+import { DeleteTagController } from 'useCases/deleteTag/DeleteTagController';
 
 import { TagDTO, TagRepository } from '../../../repositories/TagRepository';
 import { TagRepositoryImp } from '../../../repositories/TagRepositoryImp';
@@ -9,9 +10,10 @@ import {
   createTagController,
   listTagController,
   updateTagController,
+  deleteTagController,
 } from '../../containers/TodoContainer';
 import { Database } from '../../database/prisma';
-import { TagObjectType } from './TagObjectType';
+import { TagObjectType, TagStatus } from './TagObjectType';
 
 @InputType()
 class CreateTagInput {
@@ -38,6 +40,7 @@ class TagResolver {
   createTagController: CreateTagController;
   listTagController: ListTagController;
   updateTagController: UpdateTagController;
+  deleteTagController: DeleteTagController;
 
   constructor() {
     this.tagRepository = new TagRepositoryImp(Database.instance);
@@ -45,6 +48,7 @@ class TagResolver {
     this.createTagController = createTagController(this.tagRepository);
     this.listTagController = listTagController(this.tagRepository);
     this.updateTagController = updateTagController(this.tagRepository);
+    this.deleteTagController = deleteTagController(this.tagRepository);
   }
 
   @Mutation(() => TagObjectType)
@@ -74,6 +78,13 @@ class TagResolver {
     });
 
     return tag;
+  }
+
+  @Mutation(() => TagStatus)
+  async deleteTag(@Arg('tagId') tagId: number): Promise<TagStatus> {
+    const response = await this.deleteTagController.handle(tagId);
+
+    return { status: response };
   }
 }
 
