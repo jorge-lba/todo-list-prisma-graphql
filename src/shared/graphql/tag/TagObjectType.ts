@@ -12,4 +12,10 @@ class TagObjectType {
   description: string;
 }
 
-export { TagObjectType };
+@ObjectType()
+class TagStatus {
+  @Field()
+  status: boolean;
+}
+
+export { TagObjectType, TagStatus };

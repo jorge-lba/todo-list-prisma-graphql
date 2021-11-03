@@ -70,6 +70,13 @@ class TagRepositoryImpInMemory implements TagRepository {
 
     return updatedTag;
   }
+
+  async deleteById(tagId: number): Promise<void> {
+    await this.tags.splice(
+      this.tags.findIndex((tag) => tag.id === tagId),
+      1,
+    );
+  }
 }
 
 export { TagRepositoryImpInMemory };

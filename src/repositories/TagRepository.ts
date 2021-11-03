@@ -20,6 +20,7 @@ interface TagRepository {
     tagId: number,
     updateData: Partial<CreateTagDTO>,
   ) => Promise<TagDTO>;
+  deleteById: (tagId: number) => Promise<void>;
 }
 
 export { TagDTO, TagRepository, CreateTagDTO };

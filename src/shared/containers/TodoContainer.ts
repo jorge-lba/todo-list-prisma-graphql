@@ -6,6 +6,8 @@ import { CreateTagController } from '../../useCases/createTag/CreateTagControlle
 import { CreateTagUseCase } from '../../useCases/createTag/CreateTagUseCase';
 import { CreateTodoController } from '../../useCases/createTodo/CreateTodoController';
 import { CreateTodoUseCase } from '../../useCases/createTodo/CreateTodoUseCase';
+import { DeleteTagController } from '../../useCases/deleteTag/DeleteTagController';
+import { DeleteTagUseCase } from '../../useCases/deleteTag/DeleteTagUseCase';
 import { DeleteTodoController } from '../../useCases/deleteTodo/DeleteTodoController';
 import { DeleteTodoUseCase } from '../../useCases/deleteTodo/DeleteTodoUseCase';
 import { FindByIdTodoController } from '../../useCases/findByIdTodo/FindByIdTodoController';
@@ -89,6 +91,14 @@ const deleteTodoController = (
   return new DeleteTodoController(useCase);
 };
 
+const deleteTagController = (
+  repository: TagRepository,
+): DeleteTagController => {
+  const useCase = new DeleteTagUseCase(repository);
+
+  return new DeleteTagController(useCase);
+};
+
 const addTagsInTodoController = (
   repository: TodoRepository,
 ): AddTagsInTodoController => {
@@ -106,6 +116,7 @@ export {
   toggleDoneTodoController,
   updateTodoController,
   deleteTodoController,
+  deleteTagController,
   addTagsInTodoController,
   updateTagController,
 };

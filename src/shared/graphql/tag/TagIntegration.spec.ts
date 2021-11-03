@@ -56,13 +56,13 @@ describe('Tag Integration', () => {
     const todos = res.data;
 
     expect(todos).toEqual({
-      tags: [
+      tags: expect.arrayContaining([
         {
           id: '1',
-          name: 'Prisma',
-          description: 'Prisma is a GraphQL client for your existing database.',
+          name: expect.any(String),
+          description: expect.any(String),
         },
-      ],
+      ]),
     });
   });
 
@@ -101,5 +101,46 @@ describe('Tag Integration', () => {
         description: 'Test Tag Description Updated',
       },
     });
+  });
+
+  it('should be delete one tag', async () => {
+    const res = await server.executeOperation({
+      query: gql`
+        mutation DeleteTagMutation($id: Float!) {
+          deleteTag(tagId: $id) {
+            status
+          }
+        }
+      `,
+      variables: {
+        id: 1,
+      },
+    });
+
+    const resList = await server.executeOperation({
+      query: gql`
+        query tagsQuery {
+          tags {
+            id
+          }
+        }
+      `,
+    });
+
+    const tags = resList.data;
+
+    const { data } = res;
+
+    expect(data).toEqual({
+      deleteTag: {
+        status: true,
+      },
+    });
+
+    const tagIsValid = tags?.tags.findIndex(
+      (tag: { id: number }) => tag.id === 1,
+    );
+
+    expect(tagIsValid === -1).toBe(true);
   });
 });
