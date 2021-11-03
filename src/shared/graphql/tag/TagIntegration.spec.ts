@@ -102,4 +102,43 @@ describe('Tag Integration', () => {
       },
     });
   });
+
+  it('should be delete one tag', async () => {
+    const res = await server.executeOperation({
+      query: gql`
+        mutation DeleteTagMutation($id: Float!) {
+          deleteTag(tagId: $id) {
+            status
+          }
+        }
+      `,
+      variables: {
+        id: 1,
+      },
+    });
+
+    const resList = await server.executeOperation({
+      query: gql`
+        query tagsQuery {
+          tags {
+            id
+          }
+        }
+      `,
+    });
+
+    const tags = resList.data;
+
+    const { data } = res;
+
+    expect(data).toEqual({
+      deleteTag: {
+        status: true,
+      },
+    });
+
+    expect(tags).toEqual({
+      tags: [],
+    });
+  });
 });
