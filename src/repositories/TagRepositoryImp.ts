@@ -51,7 +51,12 @@ class TagRepositoryImp implements TagRepository {
     return tag;
   }
 
-  deleteById: (tagId: number) => Promise<void>;
+  async deleteById(tagId: number): Promise<void> {
+    await this.model.delete({
+      where: { id: tagId },
+    });
+  }
+
   findOneById: (tagId: number) => Promise<TagDTO>;
   findAllByIds: (tagIds: number[]) => Promise<TagDTO[]>;
 }
